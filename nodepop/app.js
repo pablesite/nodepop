@@ -20,9 +20,24 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', require('./routes/index'));
-app.use('/apiv1/agentes', require('./routes/apiv1/agentes'));
-app.use('/apiv1/anuncios', require('./routes/apiv1/anuncios'));
+app.use((req, res, next) =>{
+  // Una de 2 cosas:
+  // - Responder
+  //res.send('ok');
+  // - o Llamar a next
+  //console.log('Petición a', req.originalUrl);
+  //next(new Error('cosa mala'));
+  next();
+});
+/**
+ * Rutas de mi aplicación web
+ */
+app.use('/',                require('./routes/index'));
+app.use('/apiv1/agentes',   require('./routes/apiv1/agentes'));
+app.use('/apiv1/anuncios',  require('./routes/apiv1/anuncios'));
+
+//prueba para cargar imágenes....
+//app.get("/", express.static(path.join(__dirname, "./public")));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

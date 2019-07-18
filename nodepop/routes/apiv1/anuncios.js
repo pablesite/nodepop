@@ -5,6 +5,9 @@ var router = express.Router();
 var mongoose = require('mongoose');
 var Anuncio = mongoose.model('Anuncio');
 
+
+
+
 // recuperar lista de anuncios
 router.get('/', function(req, res, next){
     
@@ -32,7 +35,10 @@ router.get('/', function(req, res, next){
             next(err);
             return;
         }
-        res.json({ok: true, list: list});
+        //res.json({ok: true, list: list}); //este es el del api
+
+        //res.locals.list = list;
+        res.render('anuncios', {list});
     });
 });
 
@@ -47,8 +53,8 @@ router.post('/', function(req, res, next){
     });
 });
 
-//actualizar un anuncio
 
+//actualizar un anuncio
 router.put('/:id', function(req, res, next){
     var id = req.params.id;
     Anuncio.update({_id: id}, req.body, function(err, anuncio){
@@ -69,5 +75,6 @@ router.delete('/:id', function(req, res, next){
         res.json({ok: true, result: result});
     });
 });
+
 
 module.exports = router;

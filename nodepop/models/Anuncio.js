@@ -2,7 +2,7 @@
 
 const mongoose = require('mongoose');
 
-var anuncioSchema = mongoose.Schema({
+const anuncioSchema = mongoose.Schema({
     nombre: String,
     venta: Boolean,
     precio: Number,
@@ -11,7 +11,7 @@ var anuncioSchema = mongoose.Schema({
 });
 
 anuncioSchema.statics.list = function(filter, limit, skip, fields, sort, cb) {
-    var query = Anuncio.find(filter);
+    let query = Anuncio.find(filter); //no se si esta variable es let...o sería mejor cons
     query.limit(limit);
     query.skip(skip);
     query.select(fields);
@@ -19,4 +19,5 @@ anuncioSchema.statics.list = function(filter, limit, skip, fields, sort, cb) {
     query.exec(cb);
 };
 
-var Anuncio = mongoose.model('Anuncio', anuncioSchema);
+//no se si este const puede dar problema. parece que hace hoisting...
+const Anuncio = mongoose.model('Anuncio', anuncioSchema);
