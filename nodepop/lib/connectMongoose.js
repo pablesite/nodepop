@@ -22,7 +22,7 @@ const dbpath = "mongodb://localhost:27017/cursonode";
 
 const mongo = mongoose.connect(dbpath, {useNewUrlParser: true });
 mongo.then(() => {
-console.log('connected');
+console.log('Conectado a MongoDB');
 }).catch((err) => {
 console.log('err', err);
 });

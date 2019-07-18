@@ -4,14 +4,11 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
-
-
 const app = express();
 
 require('./lib/connectMongoose');
 require('./models/Agente');
+require('./models/Anuncio');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -23,9 +20,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/', require('./routes/index'));
 app.use('/apiv1/agentes', require('./routes/apiv1/agentes'));
+app.use('/apiv1/anuncios', require('./routes/apiv1/anuncios'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -40,17 +37,16 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  /*if (isAPI(req)){
+  if (isAPI(req)){
     res.json({ok: false, err: err.message});
     return;
-  }*/
+  }
   res.render('error');
 });
 
-/* req no funciona en express 4.... hay que buscar otra solución
 function isAPI(req) {
-  return req.originalUrl.indexof('./api') === 0;
-}*/
+  return req.originalUrl.indexOf('/api') === 0;
+}
 
 
 module.exports = app;
