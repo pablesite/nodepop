@@ -10,6 +10,7 @@ require('./lib/connectMongoose');
 require('./models/Agente');
 require('./models/Anuncio');
 
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -36,6 +37,7 @@ app.use('/',                require('./routes/index'));
 app.use('/apiv1/agentes',   require('./routes/apiv1/agentes'));
 app.use('/apiv1/anuncios',  require('./routes/apiv1/anuncios'));
 
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
@@ -59,6 +61,5 @@ app.use(function(err, req, res, next) {
 function isAPI(req) {
   return req.originalUrl.indexOf('/api') === 0;
 }
-
 
 module.exports = app;

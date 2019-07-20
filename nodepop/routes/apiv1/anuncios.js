@@ -44,7 +44,7 @@ router.get('/', function(req, res, next){
             next(err);
             return;
         }
-        res.json({ok: true, list: list}); //este es el json del api
+       // res.json({ok: true, list: list}); //este es el json del api
 
         // se puede devolver directamente en el parámetro render
         //res.render('anuncios', {list});
@@ -52,10 +52,10 @@ router.get('/', function(req, res, next){
 
         // otra manera de devolver parámetros locales a la vista
         
-        /*
+        
         res.locals.list = list;
         res.render('anuncios');
-        */
+        
     });
 });
 
@@ -92,6 +92,7 @@ router.delete('/:id', function(req, res, next){
         res.json({ok: true, result: result});
     });
 });
+
 
 
 module.exports = router;
