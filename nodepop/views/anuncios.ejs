@@ -6,12 +6,13 @@
   </head>
   <body>
   
+      <h1>API de Nodepop</h1>
     <div class="anuncio">
 
       <%list.forEach(function(anuncio, index){%>
 
       <div class="title_anun">
-        <h1><%= 'Anuncio ' + (index+1)%></h1>
+        <h2><%= 'Anuncio ' + (index+1)%></h2>
       </div>
 
       <div class="descrip_anun">
@@ -30,7 +31,7 @@
         <%  let venta = 'Venta';%>
       <%= venta%>
       <%}else{%>
-        <%let venta = 'Búsqueda';%>
+        <%let venta = 'Se busca';%>
         <%=venta%>
       <%}%>
       </div>
