@@ -35,10 +35,14 @@ router.get('/', function(req, res, next){
             next(err);
             return;
         }
-        //res.json({ok: true, list: list}); //este es el del api
+        //res.json({ok: true, list: list}); //este es el json del api
 
-        //res.locals.list = list;
-        res.render('anuncios', {list});
+        // se puede devolver directamente en el parámetro render
+        //res.render('anuncios', {list});
+        
+        // otra manera de devolver parámetros locales a la vista
+        res.locals.list = list;
+        res.render('anuncios');
     });
 });
 

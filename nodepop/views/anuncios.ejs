@@ -5,12 +5,50 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <h1>Anuncio</h1>
+  
+    <div class="anuncio">
 
-    <% let ob = JSON.stringify(list) %>
-    <%= ob %>
-    
+      <%list.forEach(function(anuncio, index){%>
 
-    <img src="../images/bici1.jpg" WIDTH=340 HEIGHT=210 ALT="Producto1">    
+      <div class="title_anun">
+        <h1><%= 'Anuncio ' + (index+1)%></h1>
+      </div>
+
+      <div class="descrip_anun">
+        <div class="name_anun">
+          <span>Nombre:</br></span> <%= anuncio.nombre%>
+        </div>
+      </div>
+      
+      <div class="img_anun">
+          <img src= <%='../images/' + anuncio.foto %> width=340 height=210  alt="Producto1">
+      </div>
+
+      <div class="descrip_anun">
+          <span>Tipo: </span>
+      <%if (anuncio.venta === true){%>
+        <%  let venta = 'Venta';%>
+      <%= venta%>
+      <%}else{%>
+        <%let venta = 'Búsqueda';%>
+        <%=venta%>
+      <%}%>
+      </div>
+      
+      <div class="descrip_anun"><span>Precio:</span> <%=anuncio.precio%> €</div>
+        
+      <div class="descrip_anun">
+          <span> Tags: </span>
+        <div class="tags">
+          <% anuncio.tags.forEach(function(element, index){%>
+          <li> <%=element%></li>
+          <%});%>
+        </div>
+      </div>
+
+      <%});%>
+
+    </div>
+   
   </body>
 </html>
