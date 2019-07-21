@@ -1,45 +1,45 @@
 'use strict';
 
-require('./Anuncio');
-var json = require('../lib/anuncios.json');
 var mongoose = require('mongoose');
 
-console.log("Test de script de lanzamiento de db")
+require('../lib/connectMongoose')
+require('./Anuncio');
+
+const Anuncio = mongoose.model('Anuncio');
+const conn = mongoose.connection;
+
+async function initializeDb() {
+
+    //delete our db
+    let del = await Anuncio.deleteMany({});
+    console.log('Los datos contenidos en la db nodepop se han eliminado.')
+    if (del.ok === 1){
+ 
+        //generate db with anuncios.json
+        let json = require('../lib/anuncios.json');
+        let creationDb = await Anuncio.insertMany(json.anuncios);
+        console.log('Se ha inicializado la base de datos con el fichero anuncios.json')
+
+        //desconexión de la db
+        mongoose.disconnect('mongodb://localhost/nodepop', {useNewUrlParser: true });
+        return creationDb;
+
+    }
+      throw new Error('Error inicializando la db');    
+}
 
 
-//  conexión del curso node.js del Bootcamp 
-const db = mongoose.connection;
-
-db.on('error', function(err) {
+conn.on('error', function(err) {
     console.log(err);
 });
 
-db.once('open', function() {
-    console.info('Conectado a mongodb.');
+conn.once('open', function() {
 
-    Anuncio.delete_('Pablo', function(err, list){
-        if (err) {
-            next(err);
-            return;
-        }
-       
-    });
-
-   
-    Anuncio.create_(json, function(err, list){
-        if (err) {
-            next(err);
-            return;
-        }
-       
-    });
-
+    initializeDb();
 
 });
 
-mongoose.connect('mongodb://localhost/cursonode', {useNewUrlParser: true });
 
-var Anuncio = mongoose.model('Anuncio');
 
 
 

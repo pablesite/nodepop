@@ -81,7 +81,7 @@ anuncioSchema.statics.list = function(filter, limit, skip, fields, sort, cb) {
 };
 
 
-anuncioSchema.statics.delete_ = function(nombre, cb) {
+anuncioSchema.statics.delete = function(nombre, cb) {
 
     let del = Anuncio.deleteMany({});
     console.log('LO BORRO TODO')              
@@ -89,9 +89,7 @@ anuncioSchema.statics.delete_ = function(nombre, cb) {
     del.exec(cb);
 };
 
-anuncioSchema.statics.create_ = function(json, cb) {
-    console.log('VAAAMOS') 
-    console.log(json.anuncios);
+anuncioSchema.statics.create = function(json, cb) {
     let create = Anuncio.insertMany(json.anuncios);
     console.log('Creo la base de datos desde cero, a partir del json') 
     
@@ -100,7 +98,6 @@ anuncioSchema.statics.create_ = function(json, cb) {
      })
 
     
-    //create.exec(cb);
 };
 
 
