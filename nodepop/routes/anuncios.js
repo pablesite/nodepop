@@ -31,20 +31,17 @@ router.get('/', function(req, res, next){
     var skip = parseInt(req.query.skip) || null;
     var fields = req.query.fields || null;
     var sort = req.query.sort || null;
-    
-
-  /*  if (typeof age !== 'undefined') {
-        filter.age = age;
-    }*/
-
 
     //Anuncio.find().exec(function(err, list){ //esto era el método sin filtros, original
     Anuncio.list(filter, limit, skip, fields, sort, function(err, list){
         if (err) {
             next(err);
             return;
-        }
-       res.json({ok: true, list: list}); //este es el json del api
+        }      
+        
+        res.locals.list = list;
+        res.render('anuncios');
+
         
     });
 });
@@ -59,6 +56,7 @@ router.post('/', function(req, res, next){
         res.json({ok: true, anuncio: anuncioGuardado});
     });
 });
+
 
 //actualizar un anuncio
 router.put('/:id', function(req, res, next){

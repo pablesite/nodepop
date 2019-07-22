@@ -35,6 +35,7 @@ app.use((req, res, next) =>{
  * Rutas de mi aplicación web
  */
 app.use('/',                require('./routes/index'));
+app.use('/anuncios',  require('./routes/anuncios'));
 app.use('/apiv1/agentes',   require('./routes/apiv1/agentes'));
 app.use('/apiv1/anuncios',  require('./routes/apiv1/anuncios'));
 
