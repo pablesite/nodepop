@@ -4,7 +4,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
-const app = express();
+var app = express();
 
 require('./lib/connectMongoose');
 require('./models/Agente');

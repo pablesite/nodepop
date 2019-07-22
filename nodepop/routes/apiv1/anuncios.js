@@ -54,7 +54,9 @@ router.get('/', function(req, res, next){
         
         
         res.locals.list = list;
+        console.log(res)
         res.render('anuncios');
+
         
     });
 });

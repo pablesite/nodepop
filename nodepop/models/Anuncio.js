@@ -81,36 +81,6 @@ anuncioSchema.statics.list = function(filter, limit, skip, fields, sort, cb) {
 };
 
 
-anuncioSchema.statics.delete = function(nombre, cb) {
-
-    let del = Anuncio.deleteMany({});
-    console.log('LO BORRO TODO')              
-
-    del.exec(cb);
-};
-
-anuncioSchema.statics.create = function(json, cb) {
-    let create = Anuncio.insertMany(json.anuncios);
-    console.log('Creo la base de datos desde cero, a partir del json') 
-    
-    create.then(function(result) {
-        console.log(result) // "Some User token"
-     })
-
-    
-};
-
-
-/*
-insertMany([
-   { item: "journal", qty: 25, size: { h: 14, w: 21, uom: "cm" }, status: "A" },
-   { item: "notebook", qty: 50, size: { h: 8.5, w: 11, uom: "in" }, status: "A" },
-   { item: "paper", qty: 100, size: { h: 8.5, w: 11, uom: "in" }, status: "D" },
-   { item: "planner", qty: 75, size: { h: 22.85, w: 30, uom: "cm" }, status: "D" },
-   { item: "postcard", qty: 45, size: { h: 10, w: 15.25, uom: "cm" }, status: "A" }
-]);
-*/
-
 //no se si este const puede dar problema. parece que hace hoisting...
 const Anuncio = mongoose.model('Anuncio', anuncioSchema);
 
