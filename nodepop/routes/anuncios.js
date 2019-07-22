@@ -4,7 +4,7 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 var Anuncio = mongoose.model('Anuncio');
-
+let numPags = 0;
 
 // recuperar lista de anuncios
 router.get('/', function(req, res, next){
@@ -32,6 +32,15 @@ router.get('/', function(req, res, next){
     var fields = req.query.fields || null;
     var sort = req.query.sort || null;
 
+    
+
+    //Lo uso para saber el número de anuncios totales, para paginar. 
+    //pagino cada 3 anuncios.   
+    Anuncio.find({}).exec(function(err, list){
+        numPags = Math.floor(list.length/3);
+    });
+   
+
     //Anuncio.find().exec(function(err, list){ //esto era el método sin filtros, original
     Anuncio.list(filter, limit, skip, fields, sort, function(err, list){
         if (err) {
@@ -39,9 +48,9 @@ router.get('/', function(req, res, next){
             return;
         }      
         
+        res.locals.numPags = numPags;
         res.locals.list = list;
         res.render('anuncios');
-
         
     });
 });

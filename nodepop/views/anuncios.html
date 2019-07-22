@@ -4,23 +4,24 @@
     <title>Anuncios</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <script src='/javascripts/buscar.js'></script>
+    <script src='/javascripts/paginacion.js'></script>
   
 
   </head>
-  <body>
+ 
+  <body onload="paginacion(<%=numPags%>)">
   
-      <h1>API de Nodepop</h1>
+    <h1>API de Nodepop</h1>
       
-      <input type="text" size="15" maxlength="30" value="Buscar" name="buscar" id="textBuscar">
-      <button value="botonBuscar" onclick="buscar()"> Buscar </button>
-          
-
+    <input type="text" size="15" maxlength="30" value="Buscar" name="buscar" id="textBuscar">
+    <button value="botonBuscar" onclick="buscar()"> Buscar </button>
+           
     <div class="anuncio">
 
       <%list.forEach(function(anuncio, index){%>
 
       <div class="title_anun">
-        <h2><%= 'Anuncio ' + (index+1)%></h2>
+        <h2><%= 'Anuncio '%></h2>
       </div>
 
       <div class="descrip_anun">
@@ -58,6 +59,11 @@
       <%});%>
 
     </div>
-   
+
+    <section class="paginacion">
+      <ul id = "pags"></ul>
+    </section> 
+
+    </div>
   </body>
 </html>

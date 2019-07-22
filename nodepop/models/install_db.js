@@ -35,7 +35,9 @@ conn.on('error', function(err) {
 
 conn.once('open', function() {
 
-    initializeDb();
+    initializeDb().catch(err => {
+        console.log('No se ha podido completar la inicialización de la db.', err)
+    });
 
 });
 

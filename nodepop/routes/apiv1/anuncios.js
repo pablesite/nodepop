@@ -44,6 +44,7 @@ router.get('/', function(req, res, next){
             next(err);
             return;
         }
+
        res.json({ok: true, list: list}); //este es el json del api
         
     });
