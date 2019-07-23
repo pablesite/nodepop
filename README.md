@@ -44,23 +44,61 @@ A partir de aquí, ya hay anuncios en la base de datos.
 
 ## Arranque de la API
 
+Para arrancar la API, hay dos posibilidades, arrancarla en modo producción o en modo desarrollo.
 
-npm run dev --> desarrollador (lanza el nodemon)
+El modo desarrollo usa nodemon, lo cual es cómodo siempre que estés trabajando sobre una nueva funcionalidad o estés trabajando sobre una incidencia.
+
+```bash
+npm run dev
+```
+
+El modo producción es el recomendado para el uso de la API por terceros. Este hace un arranque típico con npm (run) start.
+
+```bash
+npm run prod
+```
 
 Al fin ya está todo listo. La API está preparada para recibir consultas.
 
+## Cómo usar la API
 
- a través de la URL:
+Esta API ofrece la siguiente funcionalidad:
+
+* Lista de anuncios con posibilidad de paginación.
+   1. Filtros por tag
+   2. Filtros por tipo de anuncio (venta o búsqueda)
+   3. Filtros por rango de precio (precio min. y precio max.)
+   4. Filtros por nombre de artículo
+
+* Lista de tags existentes
+
+* Creación, edición y borrado de un anuncio.
+
+### Listado de anuncios con filtros
+
+Para filtrar anuncios, dirígete a la URL:
 
 ```bash
 http://localhost:3000/apiv1/anuncios
 ```
+Esta URL devuelve el listado de todos los anuncios que hay en base de datos. 
+Podemos filtrar:
+1. Por tag: 
+```bash
+?tag='nombre_tag1'&tag='nombre_tag2'
+```
+   Devuelve los anuncios que contienen los tags indicados. 
+   Si se pasan más tags a la URL, hará una función OR y devolverá   los anuncios que contengan al menos una de las tags indicadas.
+2. Por tipo de anuncio: ?venta=true
 
-## Uso de la API
+1. Por Tag: ?tag='nombre_tag'
+1. Por Tag: ?tag='nombre_tag'
+
+### Listado de tags existentes
+
+### Creación, edición y borrado de un anuncio
 
 ## Uso de la Página Web
 
 ## Licencia
 [Pablo Ruiz Molina] Repositorio público para el Bootcamp de Desarrollo Web de Keepcoding.
-
-
