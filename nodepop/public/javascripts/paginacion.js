@@ -8,6 +8,5 @@ function paginacion(numPags) {
         li.innerHTML = "<a href=/anuncios?limit=3&skip=" + (i-1)*3 + ">" + i + "</a>";
         pags.appendChild(li);
       };
-
-
+      //window.location = '/anuncios?limit=3&skip=0';
 }

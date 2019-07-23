@@ -31,14 +31,22 @@ app.use((req, res, next) =>{
   //next(new Error('cosa mala'));
   next();
 });
+
+
+app.locals.title = 'Nodepop';
 /**
  * Rutas de mi aplicación web
  */
+
 app.use('/',                require('./routes/index'));
-app.use('/anuncios',  require('./routes/anuncios'));
+app.use('/anuncios',        require('./routes/anuncios'));
+
+/**
+ * Rutas de mi API
+ */
 app.use('/apiv1/agentes',   require('./routes/apiv1/agentes'));
 app.use('/apiv1/anuncios',  require('./routes/apiv1/anuncios'));
-
+app.use('/apiv1/tags',      require('./routes/apiv1/tags'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -47,6 +55,13 @@ app.use(function(req, res, next) {
 
 // error handler
 app.use(function(err, req, res, next) {
+  // comprobar error de validación
+  if (err.array) {
+    err.status = 422;
+    const errInfo = err.array({onlyFirstError: true})[0];
+    err.message = `Not valid - ${errInfo.param} ${errInfo.msg}`; 
+  }
+
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};

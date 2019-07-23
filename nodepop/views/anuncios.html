@@ -13,9 +13,12 @@
   
     <h1>API de Nodepop</h1>
       
-    <input type="text" size="15" maxlength="30" value="Buscar" name="buscar" id="textBuscar">
+    <input type="text" size="15" maxlength="30" name="buscar" id="textBuscar">
     <button value="botonBuscar" onclick="buscar()"> Buscar </button>
-           
+
+    <!--<p> Pulsa si quieres ver funcionalidad de paginación. </p>
+    <button value="paginacion" onclick="paginacion(<%=numPags%>)"> Paginar </button>-->
+     
     <div class="anuncio">
 
       <%list.forEach(function(anuncio, index){%>
