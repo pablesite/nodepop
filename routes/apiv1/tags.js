@@ -26,8 +26,12 @@ router.get('/', function(req, res, next){
 
         //f unción que devuelve elementos únicos en un array.
         Array.prototype.unique=function(a){
-            return function(){return this.filter(a)}}(function(a,b,c){return c.indexOf(a,b+1)<0
-          });
+            return function(){
+                return this.filter(a);
+            };
+        }(function(a,b,c){
+                return c.indexOf(a,b+1)<0;
+        });
           
         res.json({ok: true, tags: tags.unique()}); //este es el json del api
         

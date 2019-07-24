@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-const {query, body, param, validationResult } = require('express-validator');
+const {query, validationResult } = require('express-validator');
 
 
 /* GET home page. */
@@ -21,7 +21,7 @@ router.get('/enquerystring',
 
   }
 
-)
+);
   
 
 module.exports = router;

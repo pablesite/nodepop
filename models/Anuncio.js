@@ -24,7 +24,7 @@ anuncioSchema.statics.list = function(filter, limit, skip, fields, sort, cb) {
 
     //Si es un nombre, se filtra tal cual (find(filter))
     if (filter.nombre){
-        filtradoNombre = { nombre: new RegExp('^'+ filter.nombre, "i") };
+        filtradoNombre = { nombre: new RegExp('^'+ filter.nombre, 'i') };
         Object.keys(filtradoNombre).forEach((key) => filtrado[key] = filtradoNombre[key]);
     }
 
@@ -42,9 +42,9 @@ anuncioSchema.statics.list = function(filter, limit, skip, fields, sort, cb) {
             if (precios[0] ===''){
                 filtradoPrecios = { precio:  { '$lte': precios[1] }};
             } else if (precios[1] === ''){
-                filtradoPrecios = { precio:  { '$gte': precios[0] } }
+                filtradoPrecios = { precio:  { '$gte': precios[0] } };
             } else {
-                filtradoPrecios = { precio:  { '$gte': precios[0], '$lte': precios[1] } }
+                filtradoPrecios = { precio:  { '$gte': precios[0], '$lte': precios[1] } };
             }
 
         } else if (precios.length === 1){
@@ -56,7 +56,7 @@ anuncioSchema.statics.list = function(filter, limit, skip, fields, sort, cb) {
     //Si es un tag, hay que usar una condición (mirar los or...)
     if (filter.tag){
         if (typeof filter.tag === 'string') {
-            filtradoTag = { tag: filter.tag }
+            filtradoTag = { tag: filter.tag };
         } else {
             //filtradoTag = { tag: {$in: [filter.tag] } };
         /** la query de arriba no funciona como debería. Me hace un filtro AND entre la lista de tag y yo quiero uno OR... 
