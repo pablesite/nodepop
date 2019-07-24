@@ -11,7 +11,6 @@ const anuncioSchema = mongoose.Schema({
 });
 
 
-
 anuncioSchema.statics.list = function(filter, limit, skip, fields, sort, cb) {
     //comprobar qué viene en el filtro.
 
@@ -84,5 +83,7 @@ anuncioSchema.statics.list = function(filter, limit, skip, fields, sort, cb) {
 //no se si este const puede dar problema. parece que hace hoisting...
 const Anuncio = mongoose.model('Anuncio', anuncioSchema);
 
-//probando... no hace falta exportarlo 
-module.exports = anuncioSchema;
+// Creación de índices en los campos en los que haremos búsquedas. 
+// Esto mejora en mucho la velocidad de consulta de la db
+anuncioSchema.index({nombre: 1, venta: 1, precio: 1, tag: 1 });
+
