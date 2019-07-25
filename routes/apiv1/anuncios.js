@@ -47,7 +47,7 @@ router.get('/', function(req, res, next){
 
 /* Crear un anuncio */
 router.post('/', function(req, res, next){
-    var anuncio = new Anuncio(req.body);
+    let anuncio = new Anuncio(req.body);
     anuncio.save(function(err, anuncioGuardado) {
         if (err) {
             return next(err);
@@ -58,7 +58,7 @@ router.post('/', function(req, res, next){
 
 /* Actualizar un anuncio */
 router.put('/:id', function(req, res, next){
-    var id = req.params.id;
+    let id = req.params.id;
     Anuncio.update({_id: id}, req.body, function(err, anuncio){
         if (err) {
             return next(err);
@@ -69,7 +69,7 @@ router.put('/:id', function(req, res, next){
 
 /* Borrar un anuncio */
 router.delete('/:id', function(req, res, next){
-    var id = req.params.id;
+    let  id = req.params.id;
     Anuncio.remove({_id: id}, function (err, result){
         if (err) {
             return next(err);

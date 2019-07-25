@@ -63,7 +63,6 @@ Al fin ya está todo listo. La API está preparada para recibir consultas.
 ## Cómo usar la API
 
 Esta API ofrece la siguiente funcionalidad:
-
 * Lista de anuncios con posibilidad de paginación.
    1. Filtros por tag
    2. Filtros por tipo de anuncio (venta o búsqueda)
@@ -89,38 +88,133 @@ Podemos filtrar:
 ```
    Devuelve los anuncios que contienen los tags indicados. 
    Si se pasan más tags a la URL, hará una función OR y devolverá   los anuncios que contengan al menos una de las tags indicadas.
-2. Por tipo de anuncio: ?venta=true
+2. Por tipo de anuncio:
+```bash
+?venta='boolean'
+```
+   Devuelve los anuncios que son de tipo venta si es true. 
+   Con un false devolvería los de tipo 'Se busca'
 
-1. Por Tag: ?tag='nombre_tag'
-1. Por Tag: ?tag='nombre_tag'
+3. Por rango de precio (precio min. y precio max.):
+```bash
+?precio='preciomin'-'preciomax'
+```
+Devuelve los anuncios con rango de precio entre preciomin y preciomax €.
+Se usa un parámetro en la query string llamado precio que tiene una de estas combinaciones :
+* 10-50 buscará anuncios con precio incluido entre estos valores { precio:
+{ '$gte': '10', '$lte': '50' } }
+* 10- buscará los que tengan precio mayor que 10 { precio: { '$gte':
+'10' } }
+* -50 buscará los que tengan precio menor de 50 { precio: { '$lte':
+'50' } }
+* 50 buscará los que tengan precio igual a 50 { precio: '50' }
+
+4. Por nombre:
+```bash
+?nombre='iniciales_nombre'
+```
+Devuelve los anuncios los cuales su nombre empieza por iniciales_nombre
+
+5. Funciones especiales (skip, limit, fields y sort)
+Estos 4 parámetros también se pueden pasar a la URL de manera que el GET se complete y sea todo lo preciso que se desee.
+```bash
+?skip='nº'
+```
+Salta el número de anuncios indicado en nº.
+
+```bash
+?limit='nº'
+```
+Limita el número de anuncios al indicado en nº.
+
+```bash
+?fields='nombre_campo'
+```
+Muestra sólo el campo indicado en nombre_campo.
+
+```bash
+?sort='nombre_campo'
+```
+Ordena la consulta por el campo indicado en nombre_campo.
+
+
+Los filtros se pueden combinar, de manera que puede quedar una consulta como la siguiente:
+```bash
+http://localhost:3000/apiv1/anuncios?tag=mobile&venta=false&no
+mbre=ip&precio=50-&skip=3&limit=2&sort=precio
+```
 
 ### Listado de tags existentes
+Para devolver la lista de tags disponible en los anuncios existentes en nuestra base de datos, dirígete a la URL:
+
+```bash
+http://localhost:3000/apiv1/tags
+```
+Esta URL devuelve el listado de las tags disponibles en los anuncios, sin repetirlas. Como máximo, se pueden listar las 4 tags disponibles.
+* work
+* mobile
+* motor
+* lifestyle
 
 ### Creación, edición y borrado de un anuncio
+La API tiene disponible la creación, edición y borrado de un anuncio.
+Para ello habrá que usar un software de peticiones tipo Postman. El uso de este tipo de software queda fuera del alcance de esta documentación.
+Sí que cabe comentar los tipos de peticiones de cada función:
+* Creación de anuncio
+Petición POST a la URL http://localhost:3000/apiv1/
+* Creación de anuncio
+Petición PUT a la URL http://localhost:3000/apiv1/:id
+* Creación de anuncio
+Petición DELETE a la URL http://localhost:3000/apiv1/:id
 
+Si se quieren probar estas funciones, se deberá conocer el modelo a la hora de introducir el body de la petición:
+    - nombre: String
+    - venta: Boolean
+    - precio: Number
+    - foto: String 
+    - tag: [String]
 ## Uso de la Página Web
+Además de la funcionalidad de la API como tal, se ha preparado una página web muy sencilla con el único objetivo de mostrar la potencia de la API. 
+La web se ha creado con el motor de vistas ejs.
+Se puede acceder con la siguiente url:
+```bash
+http://localhost:3000/anuncios
+```
+Esta web permite visualizar los anuncios ligeramente maquetados. Además tiene un par de funcionalidades extras.
+* Buscar
+Permite introducir una cadena de búsqueda y devuelve los anuncios que empiecen por esa cadena de búsqueda.
+* Paginación
+Permite paginar el listado de anuncios de 3 en 3. Dado que es un ejemplo muy básico, el nº de anuncios por página se ha escogido estáticamente. 
+Sin embargo, si la lista de anuncios crece, la paginación crece dinámicamente.
+Notar por otra parte, que en la carga inicial de la web, esta no pagina. La funcionalidad se puede probar bajando al final de la web y pinchando en los números de página.
 
 ## Test de código con la herramienta Eslint
+Como último punto de la documentación, cade destacar el uso de la herramienta Eslint para la revisión de estilo de código y de los posibles bugs.
+Se han probado tan sólo unos pocos filtros y se ha comprobado la potencia de la misma. En futuras versiones de la API se pueden introducir más "rules" y obtener así el máximo partido que la herramienta proporciona.
+No obstante, para testear los filtros implementados, se puede ejecutar directamente desde consola de la siguiente forma:
 
-Testear app.js -->
+* Testear app.js:
 ```bash
  npm run testapp
 ```
 
+* Testear /routes:
 ```bash
-Testear /routes --> npm run testroutes
+npm run testroutes
 ```
 
+* Testear /models:
 ```bash
-Testear /models --> npm run testmodels
+npm run testmodels
 ```
 
+* Testear /lib:
 ```bash
-Testear /lib --> npm run testlib
+npm run testlib
 ```
-
+* Testear /public:
 ```bash
-Testear /public --> npm run testpublic
+npm run testpublic
 ```
 
 ## Licencia

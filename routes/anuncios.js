@@ -1,15 +1,15 @@
 'use strict';
 
-var express = require('express');
-var router = express.Router();
-var mongoose = require('mongoose');
-var Anuncio = mongoose.model('Anuncio');
+const express = require('express');
+const router = express.Router();
+const mongoose = require('mongoose');
+const Anuncio = mongoose.model('Anuncio');
 let numPags = 0;
 
 /* Recupero la lista de anuncios */
 router.get('/', function(req, res, next){
     
-    var filter = {};
+    const filter = {};
 
     if (req.query.nombre) {
         filter.nombre = req.query.nombre;
@@ -27,10 +27,10 @@ router.get('/', function(req, res, next){
         filter.tag = req.query.tag;
     }
    
-    var limit = parseInt(req.query.limit) || null;
-    var skip = parseInt(req.query.skip) || null;
-    var fields = req.query.fields || null;
-    var sort = req.query.sort || null;
+    const limit = parseInt(req.query.limit) || null;
+    const skip = parseInt(req.query.skip) || null;
+    const fields = req.query.fields || null;
+    const sort = req.query.sort || null;
 
     /** Lo uso para saber el número de anuncios totales, para paginar. 
     * Pagino cada 3 anuncios de manera estática.    
