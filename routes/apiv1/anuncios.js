@@ -1,15 +1,15 @@
 'use strict';
 
-var express = require('express');
-var router = express.Router();
-var mongoose = require('mongoose');
-var Anuncio = mongoose.model('Anuncio');
+const express = require('express');
+const router = express.Router();
+const mongoose = require('mongoose');
+const Anuncio = mongoose.model('Anuncio');
 
 
-// recuperar lista de anuncios
+/* Recupero los parámetros que me entran en la ruta */
 router.get('/', function(req, res, next){
     
-    var filter = {};
+    let filter = {};
 
     if (req.query.nombre) {
         filter.nombre = req.query.nombre;
@@ -27,30 +27,25 @@ router.get('/', function(req, res, next){
         filter.tag = req.query.tag;
     }
    
-    var limit = parseInt(req.query.limit) || null;
-    var skip = parseInt(req.query.skip) || null;
-    var fields = req.query.fields || null;
-    var sort = req.query.sort || null;
-    
+    let limit = parseInt(req.query.limit) || null;
+    let skip = parseInt(req.query.skip) || null;
+    let fields = req.query.fields || null;
+    let sort = req.query.sort || null;
 
-  /*  if (typeof age !== 'undefined') {
-        filter.age = age;
-    }*/
-
-
-    //Anuncio.find().exec(function(err, list){ //esto era el método sin filtros, original
+    /* Hago la consulta según los parámetros que me han entrado */
     Anuncio.list(filter, limit, skip, fields, sort, function(err, list){
         if (err) {
             next(err);
             return;
         }
 
-       res.json({ok: true, list: list}); //este es el json del api
+        /* Devuelvo un json */
+        res.json({ok: true, list: list});
         
     });
 });
 
-//crear un anuncio
+/* Crear un anuncio */
 router.post('/', function(req, res, next){
     var anuncio = new Anuncio(req.body);
     anuncio.save(function(err, anuncioGuardado) {
@@ -61,7 +56,7 @@ router.post('/', function(req, res, next){
     });
 });
 
-//actualizar un anuncio
+/* Actualizar un anuncio */
 router.put('/:id', function(req, res, next){
     var id = req.params.id;
     Anuncio.update({_id: id}, req.body, function(err, anuncio){
@@ -72,7 +67,7 @@ router.put('/:id', function(req, res, next){
     });
 });
 
-//borrar un anuncio
+/* Borrar un anuncio */
 router.delete('/:id', function(req, res, next){
     var id = req.params.id;
     Anuncio.remove({_id: id}, function (err, result){
@@ -82,7 +77,5 @@ router.delete('/:id', function(req, res, next){
         res.json({ok: true, result: result});
     });
 });
-
-
 
 module.exports = router;

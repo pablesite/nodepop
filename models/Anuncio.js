@@ -12,7 +12,7 @@ const anuncioSchema = mongoose.Schema({
 
 
 anuncioSchema.statics.list = function(filter, limit, skip, fields, sort, cb) {
-    //comprobar qué viene en el filtro.
+    /* Compruebo qué viene en el filtro */
 
     let query;
     let filtradoNombre = {};
@@ -22,19 +22,19 @@ anuncioSchema.statics.list = function(filter, limit, skip, fields, sort, cb) {
 
     let filtrado={};
 
-    //Si es un nombre, se filtra tal cual (find(filter))
+    /* Si es un nombre, se filtra con una expresión regular que permite buscar por los primeros caracteres del nombre */
     if (filter.nombre){
         filtradoNombre = { nombre: new RegExp('^'+ filter.nombre, 'i') };
         Object.keys(filtradoNombre).forEach((key) => filtrado[key] = filtradoNombre[key]);
     }
 
-    //Si es un tipo de anuncio, se filtra tal cual (find(filter))
+    /* Si es un tipo de anuncio, se filtra simplemente tal cual */
     if (filter.venta){
         filtradoVenta = {venta: filter.venta};
         Object.keys(filtradoVenta).forEach((key) => filtrado[key] = filtradoVenta[key]);
     }
     
-    //Si es un precio, hay que usar combinaciones
+    /* Si es un precio, hay que usar combinaciones */
     if (filter.precio){
         let precios = filter.precio.split('-');
         
@@ -53,25 +53,25 @@ anuncioSchema.statics.list = function(filter, limit, skip, fields, sort, cb) {
         Object.keys(filtradoPrecios).forEach((key) => filtrado[key] = filtradoPrecios[key]);
     }
 
-    //Si es un tag, hay que usar una condición (mirar los or...)
+    /* Si es un tag, hay que usar condiciones */
     if (filter.tag){
-        if (typeof filter.tag === 'string') {
+        if (typeof filter.tag === 'string') { //si es string, significa que sólo se ha pasado un tag
             filtradoTag = { tag: filter.tag };
-        } else {
+        } else { // si no, llega un array de tags
             //filtradoTag = { tag: {$in: [filter.tag] } };
-        /** la query de arriba no funciona como debería. Me hace un filtro AND entre la lista de tag y yo quiero uno OR... 
-         * en la documentación dice que hace un filtro or...
-         * Implemento la query de abajo, que aunque no es elegante, funciona como yo espero.
-         */ 
+            /* la query de arriba no funciona como debería. Hace un filtro AND entre la lista de tag y yo quiero uno OR... 
+            * en la documentación dice que hace un filtro or...
+            * Implemento la query de abajo, que aunque no es elegante, funciona como yo espero.
+            */ 
             filtradoTag = { $or: [ { tag: filter.tag[0] } , { tag: filter.tag[1] }, { tag: filter.tag[2] }, { tag: filter.tag[3] } ] };
         }
         Object.keys(filtradoTag).forEach((key) => filtrado[key] = filtradoTag[key]);
         
     }
 
+    /* Hago la búsqueda combinada con todos los filtros que han pasado por parámetro */
     query = Anuncio.find(filtrado);
                                 
-    //query = Anuncio.find(filter); //no se si esta variable es let...o sería mejor const
     query.limit(limit);
     query.skip(skip);
     query.select(fields);
@@ -80,7 +80,6 @@ anuncioSchema.statics.list = function(filter, limit, skip, fields, sort, cb) {
 };
 
 
-//no se si este const puede dar problema. parece que hace hoisting...
 const Anuncio = mongoose.model('Anuncio', anuncioSchema);
 
 // Creación de índices en los campos en los que haremos búsquedas. 

@@ -11,7 +11,6 @@ main {
   
 }
 
-
 body {
   
   background-color: white;
@@ -22,20 +21,15 @@ body {
   margin-left: calc((103vw - var(--max-width))/2);
   margin-right: calc((103vw - var(--max-width))/2);
 
-  
 }
 
 a {
   color: #00B7FF;
 }
 
-
-/* ancho del anuncio: 700 px */
 .anuncio {
   display: grid;
   grid-template-columns: 200px 350px;
-    
-  /*box-sizing: border-box;*/
 
 }
 
@@ -78,14 +72,12 @@ font-size: 1.2em;
   
 }
 
-
 .tag{
   padding-left: 40px;
 }
 
 
 /* Paginación */
-
 .paginacion {
 	margin:20px 0;
 }

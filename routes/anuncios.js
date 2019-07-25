@@ -6,7 +6,7 @@ var mongoose = require('mongoose');
 var Anuncio = mongoose.model('Anuncio');
 let numPags = 0;
 
-// recuperar lista de anuncios
+/* Recupero la lista de anuncios */
 router.get('/', function(req, res, next){
     
     var filter = {};
@@ -32,63 +32,26 @@ router.get('/', function(req, res, next){
     var fields = req.query.fields || null;
     var sort = req.query.sort || null;
 
-    
-
-    //Lo uso para saber el número de anuncios totales, para paginar. 
-    //pagino cada 3 anuncios.   
+    /** Lo uso para saber el número de anuncios totales, para paginar. 
+    * Pagino cada 3 anuncios de manera estática.    
+    */
     Anuncio.find({}).exec(function(err, list){
         numPags = Math.floor(list.length/3);
     });
-   
 
-    //Anuncio.find().exec(function(err, list){ //esto era el método sin filtros, original
     Anuncio.list(filter, limit, skip, fields, sort, function(err, list){
         if (err) {
             next(err);
             return;
         }      
         
+        /* Renderizo una vista simple */
         res.locals.numPags = numPags;
         res.locals.list = list;
         res.render('anuncios');
         
     });
 });
-
-//crear un anuncio
-router.post('/', function(req, res, next){
-    var anuncio = new Anuncio(req.body);
-    anuncio.save(function(err, anuncioGuardado) {
-        if (err) {
-            return next(err);
-        }
-        res.json({ok: true, anuncio: anuncioGuardado});
-    });
-});
-
-
-//actualizar un anuncio
-router.put('/:id', function(req, res, next){
-    var id = req.params.id;
-    Anuncio.update({_id: id}, req.body, function(err, anuncio){
-        if (err) {
-            return next(err);
-        }
-        res.json({ok: true, anuncio: anuncio});
-    });
-});
-
-//borrar un anuncio
-router.delete('/:id', function(req, res, next){
-    var id = req.params.id;
-    Anuncio.remove({_id: id}, function (err, result){
-        if (err) {
-            return next(err);
-        }
-        res.json({ok: true, result: result});
-    });
-});
-
 
 
 module.exports = router;

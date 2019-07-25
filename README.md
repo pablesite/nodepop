@@ -100,5 +100,28 @@ Podemos filtrar:
 
 ## Uso de la Página Web
 
+## Test de código con la herramienta Eslint
+
+Testear app.js -->
+```bash
+ npm run testapp
+```
+
+```bash
+Testear /routes --> npm run testroutes
+```
+
+```bash
+Testear /models --> npm run testmodels
+```
+
+```bash
+Testear /lib --> npm run testlib
+```
+
+```bash
+Testear /public --> npm run testpublic
+```
+
 ## Licencia
 [Pablo Ruiz Molina] Repositorio público para el Bootcamp de Desarrollo Web de Keepcoding.
