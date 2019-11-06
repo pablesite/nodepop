@@ -21,6 +21,15 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+/**
+ * Setup i18n
+ */
+const i18n = require('./lib/i18nConfigure')(); 
+app.use(i18n.init);
+
+//i18n.setLocale('es');
+//console.log(i18n.__('EXAMPLE'));
+
 app.locals.title = 'Nodepop';
 
 /** Rutas de mi aplicación web */

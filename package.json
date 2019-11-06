@@ -6,6 +6,7 @@
     "start": "node ./bin/www",
     "dev": "cross-env DEBUG=nodeapi:* nodemon",
     "prod": "cross-env NODE_ENV=production npm start",
+    "cluster": "cross-env NODE_ENV=production node ./bin/cluster",
     "db": "node models/install_db.js",
     "testapp": "node_modules/.bin/eslint ./app.js",
     "testroutes": "node_modules/.bin/eslint ./routes/**",
@@ -26,6 +27,8 @@
     "node-fetch": "^2.6.0"
   },
   "devDependencies": {
-    "eslint": "^6.1.0"
+    "eslint": "^6.1.0",
+    "i18n": "^0.8.4",
+    "nodemon": "^1.19.4"
   }
 }
