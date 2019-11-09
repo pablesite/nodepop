@@ -1,3 +1,17 @@
 {
-	"EXAMPLE": "EXAMPLE"
+	"EXAMPLE": "EXAMPLE",
+	"Welcome to": "Welcome to",
+	"Click": "Click",
+	"here": "here",
+	"in order to use the app prepared for you": "in order to use the app prepared for you",
+	"to use the functionality that filter available tags.": "to use the functionality that filter available tags.",
+	"If you want to see results in a view, click ": "If you want to see results in a view, click ",
+	"Hello, my advert is {{nombre}} and my price is {{precio}}": "Hello, my advert is {{nombre}} and my price is {{precio}}",
+	"Mouse": {
+		"one": "%s mouse",
+		"other": "%s mice"
+	},
+	"in order to use the app prepared for you.": "in order to use the app prepared for you.",
+	"Services": "Services",
+	"Text of services": "Text of services"
 }

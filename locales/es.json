@@ -1,3 +1,16 @@
 {
-	"EXAMPLE": "EJEMPLO"
+	"EXAMPLE": "EJEMPLO",
+	"Welcome to": "Bienvenido a",
+	"Click": "Click",
+	"here": "aquí",
+	"in order to use the app prepared for you.": "para usar la api que te hemos preparado y filtrar por anuncios.",
+	"to use the functionality that filter available tags.": "para usar una segunda funcionalidad que filtra los tags disponibles.",
+	"If you want to see results in a view, click ": "Si quieres ver los resultados en forma de vista, pincha ",
+	"Hello, my advert is {{nombre}} and my price is {{precio}}": "Hola, mi anuncio es {{nombre}} y mi precio es {{precio}}",
+	"Mouse": {
+		"one": "%s ratón",
+		"other": "%s ratones"
+	},
+	"Services": "Servicios",
+	"Text of services": "Texto de servicios"
 }

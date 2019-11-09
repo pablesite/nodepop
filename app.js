@@ -15,6 +15,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'html');
 app.engine('html', require('ejs').__express);
 
+//Middlewares
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -34,7 +35,10 @@ app.locals.title = 'Nodepop';
 
 /** Rutas de mi aplicación web */
 app.use('/',                require('./routes/index'));
+app.use('/services',        require('./routes/services'));
+app.use('/change-locale',   require('./routes/change-locale'));
 app.use('/anuncios',        require('./routes/anuncios'));
+
 
 /** Rutas de mi API */
 app.use('/apiv1/anuncios',  require('./routes/apiv1/anuncios'));
