@@ -3,6 +3,7 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const session = require('express-session');
 
 const app = express();
 
@@ -33,7 +34,24 @@ app.use(i18n.init);
 
 app.locals.title = 'Nodepop';
 
+/**
+ * Inicializamos y cargamos la sesión del usuario que hace la petición
+ */
+app.use(session({
+  name: 'nodeapi-session',
+  secret: 'l]~G4zXFW%0uZ^dJ30+?A/b1?=bH)8 82kR(J}3O"8E8>;9@&nuS^Me=g>]Vk`em',
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    secure: true, //solo mandar por HTTPS
+    maxAge: 1000 * 60 * 60 * 24 * 2 // caducar a los X días de inactividad
+  }
+
+}));
+
 /** Rutas de mi aplicación web */
+const sessionAuth = require('./lib/sessionAuth');
+
 const loginController = require('./routes/loginController');
 const privadoController = require('./routes/privadoController');
 
@@ -45,8 +63,9 @@ app.use('/anuncios',        require('./routes/anuncios'));
 // Usamos el estilo de Controladores para estructura las rutas siguientes:
 app.get('/login', loginController.index);
 app.post('/login', loginController.post);
+app.get('/logout', loginController.logout);
 
-app.get('/privado', privadoController.index);
+app.get('/privado', sessionAuth('admin'), privadoController.index);
 
 
 /** Rutas de mi API */

@@ -37,14 +37,32 @@ class LoginController {
             }
 
             // si encuentro el usuario, y coincide la password
+            req.session.authUser = {
+                _id: usuario._id
+                //roles: [usuario.roles] //puede ser interesante meterlo
+            };
+
             res.redirect('/privado');
 
         } catch(err) {
             next(err);
         }
 
+    }
 
+    /**
+     * GET /logout
+     */
+    logout(req, res, next) {
+        //delete req.session.authUser; //esto podría valer pero es un poco cutre
+        req.session.regenerate(err => {
+            if (err) {
+                next(err);
+                return;
+            }
+            res.redirect('/');
 
+        });
     }
 
 }

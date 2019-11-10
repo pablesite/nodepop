@@ -48,6 +48,7 @@ db.on('error', function(err) {
 db.once('open', async function() {
     try{
         await initUsuarios();
+        //Esto lo meto aquí... ver si se puede organizar mejor.
         initializeDb().catch(err => {
             console.log('No se ha podido completar la inicialización de la db.', err);
         });
