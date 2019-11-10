@@ -34,10 +34,19 @@ app.use(i18n.init);
 app.locals.title = 'Nodepop';
 
 /** Rutas de mi aplicación web */
+const loginController = require('./routes/loginController');
+const privadoController = require('./routes/privadoController');
+
 app.use('/',                require('./routes/index'));
 app.use('/services',        require('./routes/services'));
 app.use('/change-locale',   require('./routes/change-locale'));
 app.use('/anuncios',        require('./routes/anuncios'));
+
+// Usamos el estilo de Controladores para estructura las rutas siguientes:
+app.get('/login', loginController.index);
+app.post('/login', loginController.post);
+
+app.get('/privado', privadoController.index);
 
 
 /** Rutas de mi API */

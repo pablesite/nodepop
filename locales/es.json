@@ -12,5 +12,6 @@
 		"other": "%s ratones"
 	},
 	"Services": "Servicios",
-	"Text of services": "Texto de servicios"
+	"Text of services": "Texto de servicios",
+	"Invalid credentials": "Invalid credentials"
 }
