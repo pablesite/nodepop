@@ -29,10 +29,12 @@
   "devDependencies": {
     "bcrypt": "^3.0.6",
     "connect-mongo": "^3.1.2",
+    "dotenv": "^8.2.0",
     "eslint": "^6.1.0",
     "express-session": "^1.17.0",
     "i18n": "^0.8.4",
     "live-server": "^1.2.1",
+    "nodemailer": "^6.3.1",
     "nodemon": "^1.19.4"
   }
 }
