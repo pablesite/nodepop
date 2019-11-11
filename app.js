@@ -4,10 +4,11 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 
 const app = express();
 
-require('./lib/connectMongoose');
+const mongooseConnection = require('./lib/connectMongoose');
 require('./models/Anuncio');
 
 
@@ -45,9 +46,19 @@ app.use(session({
   cookie: {
     secure: true, //solo mandar por HTTPS
     maxAge: 1000 * 60 * 60 * 24 * 2 // caducar a los X días de inactividad
-  }
+  },
+  store: new MongoStore({
+    // le pasamos cómo conectarse a la bbdd.
+    mongooseConnection: mongooseConnection,
+  })
 
 }));
+
+// middleware para tener acceso a la sesión en las vistas
+app.use((req, res, next) => {
+  res.locals.session = req.session;
+  next();
+});
 
 /** Rutas de mi aplicación web */
 const sessionAuth = require('./lib/sessionAuth');
