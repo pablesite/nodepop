@@ -32,6 +32,9 @@ Una vez instalado, en Windows el servicio debe arrancar de manera predeterminada
 
 A partir de este momento, tenemos la API instalada y la base de datos preparada. Aún hay que introducir datos en la base de datos y arrancar la API.
 
+---------------------
+Make a copy of .env.example to .env and review the values.
+
 ## Inicialización de la base de datos.
 Es recomendable inicializar la base de datos la primera vez que se empieza a usar la API. Para esto, se ha preparado un fichero llamado 'archivos.json' con 6 anuncios predefinidos. No es recomendable modificarlo, aunque si se quieren añadir o editar anuncios que se carguen en la inicialización, este es el sitio.
 
