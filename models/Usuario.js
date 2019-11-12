@@ -5,7 +5,7 @@ const bcrypy = require('bcrypt');
 const nodemailerTransport = require('../lib/nodemailerConfigure');
 
 const usuarioSchema = mongoose.Schema({
-    email: String,
+    email: { type: String, unique: true },
     password: String,
 }, 
 { 
