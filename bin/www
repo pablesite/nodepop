@@ -4,14 +4,15 @@
  * Module dependencies.
  */
 
+ // Cargamos variables de configuración del fichero .env
+require('dotenv').config();
+
 var app = require('../app');
 var debug = require('debug')('nodepop:server');
 //var http = require('http');
 var https = require('https');
 const fs = require('fs');
 
-// Cargamos variables de configuración del fichero .env
-require('dotenv').config();
 
 /**
  * Get port from environment and store in Express.
