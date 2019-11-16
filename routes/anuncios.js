@@ -6,8 +6,10 @@ const mongoose = require('mongoose');
 const Anuncio = mongoose.model('Anuncio');
 let numPags = 0;
 
+const jwtAuth = require('../lib/jwtAuth');
+
 /* Recupero la lista de anuncios */
-router.get('/', function(req, res, next){
+router.get('/', jwtAuth(), function(req, res, next){
     
     const filter = {};
 

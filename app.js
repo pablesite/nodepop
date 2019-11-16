@@ -81,8 +81,11 @@ app.get('/privado', sessionAuth('admin'), privadoController.index);
 
 
 /** Rutas de mi API */
-app.use('/apiv1/anuncios',  require('./routes/apiv1/anuncios'));
+//app.use('/apiv1/anuncios',  require('./routes/apiv1/anuncios'));
+const jwtAuth = require('./lib/jwtAuth');
+app.use('/apiv1/anuncios',  jwtAuth(), require('./routes/apiv1/anuncios')); // otra manera de proteger todo el middleware de anuncios (hay que cargarlo arriba)
 app.use('/apiv1/tags',      require('./routes/apiv1/tags'));
+app.post('/apiv1/login', loginController.loginJWT);
 
 /** catch 404 and forward to error handler */
 app.use(function(req, res, next) {

@@ -5,9 +5,13 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const Anuncio = mongoose.model('Anuncio');
 
+const jwtAuth = require('../../lib/jwtAuth');
+
+
+//router.use(jwtAuth()); //protejo todo el middleware
 
 /* Recupero los parámetros que me entran en la ruta */
-router.get('/', function(req, res, next){
+router.get('/', jwtAuth(), function(req, res, next){ // si lo protejo fuera, no hay que ponerlo otra vez aquí (jwtAuth)
     
     let filter = {};
 
