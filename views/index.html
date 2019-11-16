@@ -1,26 +1,42 @@
 <% include header.html %>
 
-<header class="masthead">
-  <div class="container h-100">
-    <div class="row h-100">
-      <div class="col-lg-7 my-auto">
-        <div class="header-content mx-auto">
-          <h1><%= title %></h1>
-<p><%= __('Welcome to') %> <%= title %>. La API de anuncios que estabas esperando.</p>
-<p><%= __('Click') %> <a href="/apiv1/anuncios"><%= __('here') %></a> <%= __('in order to use the app prepared for you.') %></p>
-<p><%= __('Click') %> <a href="/apiv1/tags"><%= __('here') %></a> <%= __('to use the functionality that filter available tags.') %></p>
-<p><%= __('If you want to see results in a view, click ') %> <a href="/anuncios"><%= __('here') %></a></p>
+<section class="page-section clearfix">
+  <div class="container">
+    <div class="intro">
+      <img class="intro-img img-fluid mb-3 mb-lg-0 rounded" src="img/intro.jpg" alt="">
+      <div class="intro-text left-0 text-center bg-faded p-5 rounded">
+        <h2 class="section-heading mb-4">
+          <span class="section-heading-upper"><%= __('Welcome to') %>:</span>
+          <span class="section-heading-lower">Tu Api de anuncios </span>
+        </h2>
+          <p><%= __('Click') %> <a href="/apiv1/anuncios"><%= __('here') %></a>
+            <%= __('in order to use the app prepared for you.') %></p>
+          <p><%= __('Click') %> <a href="/apiv1/tags"><%= __('here') %></a>
+            <%= __('to use the functionality that filter available tags.') %></p>       
+       
+      </div>
+    </div>
+  </div>
+</section>
 
-<h3><%= __('Mouse', Number(5)) %></h3>
-          <a href="#download" class="btn btn-outline btn-xl js-scroll-trigger">Start Now for Free!</a>
+<section class="page-section cta">
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-9 mx-auto">
+        <div class="cta-inner text-center rounded">
+          <h2 class="section-heading mb-4">       
+            <span class="section-heading-upper">Ahroa también en:</span>
+            <span class="section-heading-lower">Front End</span>
+          </h2>
+          <p class="mb-0"><%= __('If you want to see results in a view, click ') %> <a href="/anuncios"><%= __('here') %></a></p>
         </div>
       </div>
     </div>
   </div>
-</header>
+</section>
 
 
-    
-    
-    
+
+
+
 <% include footer.html %>
