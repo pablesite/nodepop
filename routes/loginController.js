@@ -43,7 +43,7 @@ class LoginController {
                 //roles: [usuario.roles] //puede ser interesante meterlo
             };
 
-            res.redirect('/privado');
+            res.redirect('/anuncios');
 
             const result = await usuario.sendEmail('admin@example.com', 'Prueba email', 'Has entrado en <b>NodeAPI</b>')
             console.log(result);
@@ -69,35 +69,38 @@ class LoginController {
         });
     }
 
-    async loginJWT(req, res, next) {
-        try {
-            // recoger credenciales de la petición
-            const email = req.body.email;
-            const password = req.body.password;
+    // // si existe el usuario le creo un JWT, 
+    // async loginJWT(req, res, next) {
+    //     try {
+    //         // recoger credenciales de la petición
+    //         const email = req.body.email;
+    //         const password = req.body.password;
+            
+    //         // buscar el usuario en BD
+    //         const usuario = await Usuario.findOne({ email: email });
 
-            // buscar el usuario en BD
-            const usuario = await Usuario.findOne({ email: email });
+    //         // si no lo encontramos le decimos que no
+    //         if (!usuario || !await bcrypt.compare(password, usuario.password)) {
+    //             res.json({ success: false, error: res.__('Invalid credentials') });
+    //             return;
+    //         }
 
-            // si no lo encontramos le decimos que no
-            if (!usuario || !await bcrypt.compare(password, usuario.password)) {
-                res.json({ success: false, error: res.__('Invalid credentials') });
-                return;
-            }
+    //         // creamos un JWT (Sería mejor hacerlo asíncrono)
+    //         // no meter una instancia de mongoose en el Payload (sólo el id)
+    //         const token = jwt.sign({ _id: usuario._id }, process.env.JWT_SECRET, {
+    //             expiresIn: '2d'
+    //         });
+    //         // respondemos
+    //         //res.locals.JWT = token; // para mostrar en la vista.
+    //         res.json({ success: true, token: token, info: 'Now you can go to index and accedd to the API entering the token.' });
+            
 
-            // creamos un JWT (Sería mejor hacerlo asíncrono)
-            // no meter una instancia de mongoose en el Payload (sólo el id)
-            const token = jwt.sign({ _id: usuario._id }, process.env.JWT_SECRET, {
-                expiresIn: '2d'
-            });
-            // respondemos
-            res.json({ success: true, token: token });
-
-        } catch (err) {
-            next(err);
-        }
+    //     } catch (err) {
+    //         next(err);
+    //     }
 
 
-    }
+    // }
 
 }
 

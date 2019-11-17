@@ -11,7 +11,7 @@ const jwtAuth = require('../../lib/jwtAuth');
 //router.use(jwtAuth()); //protejo todo el middleware
 
 /* Recupero los parámetros que me entran en la ruta */
-router.get('/', jwtAuth(), function(req, res, next){ // si lo protejo fuera, no hay que ponerlo otra vez aquí (jwtAuth)
+router.get('/', function(req, res, next){ // si lo protejo fuera, no hay que ponerlo otra vez aquí (jwtAuth)
     
     let filter = {};
 

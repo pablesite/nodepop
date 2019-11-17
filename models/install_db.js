@@ -53,7 +53,7 @@ db.once('open', async function() {
     try{
         await initUsuarios();
         //Esto lo meto aquí... ver si se puede organizar mejor.
-        initializeDb().catch(err => {
+        initializeDb().catch(err => { //probar a hacerlo con promesas (await). Parece que el catch ya se hace en la función.
             console.log('No se ha podido completar la inicialización de la db.', err);
         });
         //db.close(); //se conoce que se cierra en otro sitio.

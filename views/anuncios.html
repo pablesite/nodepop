@@ -1,61 +1,61 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Anuncios</title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-    <script src='/javascripts/buscar.js'></script>
-    <script src='/javascripts/paginacion.js'></script>
-  </head>
+<% include header.html %>
+
  
-  <body onload="paginacion(<%=numPags%>)">
+  <!-- <body onload="paginacion(<%=numPags%>)"> -->
   
-    <h1>API de Nodepop</h1>
-      
+    <!-- <h1>API de Nodepop</h1> -->
+
+    
+    
+
+
     <input type="text" size="15" maxlength="30" name="buscar" id="textBuscar">
     <button value="botonBuscar" onclick="buscar()"> Buscar </button>   
+
 
     <div class="anuncio">
 
       <%list.forEach(function(anuncio, index){%>
 
-      <div class="title_anun">
-        <h2><%= 'Anuncio '%></h2>
-      </div>
-
-      <div class="descrip_anun">
-        <div class="name_anun">
-          <span>Nombre:</br></span> <%= anuncio.nombre%>
-        </div>
-      </div>
-      
-      <div class="img_anun">
-          <img src= <%='../images/' + anuncio.foto %> width=340 height=210  alt="Producto1">
-      </div>
-
-      <div class="descrip_anun">
-          <span>Tipo: </span>
-      <%if (anuncio.venta === true){%>
-        Venta
-      <%}else{%>
-        Se busca
-      <%}%>
-      </div>
-      
-      <div class="descrip_anun"><span>Precio:</span> <%=anuncio.precio%> €</div>
-        
-      <div class="descrip_anun">
-          <span> Tags: </span>
-        <div class="tag">
-          <% anuncio.tag.forEach(function(element, index){%>
-          <li> <%=element%></li>
-          <%});%>
-        </div>
-      </div>
-      <p>TEST: <%= __('Hello, my advert is {{nombre}} and my price is {{precio}}', anuncio) %></p>
+        <section class="page-section">
+            <div class="container">
+              <div class="product-item">
+                <div class="product-item-title d-flex">
+                  <div class="bg-faded p-5 d-flex ml-auto rounded">
+                    <h2 class="section-heading mb-0">
+                      <span class="section-heading-upper"><%= 'Anuncio '%></span>
+                      <span class="section-heading-lower"><%= anuncio.nombre%></span>
+                    </h2>
+                  </div>
+                </div>
+                <img class="product-item-img mx-auto d-flex rounded img-fluid mb-3 mb-lg-0" src=<%='../img/' + anuncio.foto %> alt="">
+                <div class="product-item-description d-flex mr-auto">     
+                  <div class="bg-faded p-5 rounded">
+                      <div class="descrip_anun">
+                          <span>Tipo: </span>
+                      <%if (anuncio.venta === true){%>
+                        Venta
+                      <%}else{%>
+                        Se busca
+                      <%}%>
+                      </div>
+                      
+                      <div class="descrip_anun"><span>Precio:</span> <%=anuncio.precio%> €</div>
+                        
+                      <div class="descrip_anun">
+                          <span> Tags: </span>
+                        <div class="tag">
+                          <% anuncio.tag.forEach(function(element, index){%>
+                          <li> <%=element%></li>
+                          <%});%>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </section>
       <%});%>
-
-      
-      
 
     </div>
 
@@ -63,6 +63,6 @@
       <ul id = "pags"></ul>
     </section> 
 
-    </div>
-  </body>
-</html>
+
+    
+<% include footer.html %>

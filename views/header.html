@@ -23,6 +23,7 @@
 </head>
 
 <body>
+  
 
   <h1 class="site-heading text-center text-white d-none d-lg-block">
     <span class="site-heading-upper text-primary mb-3"><%= title %></span>
@@ -41,29 +42,27 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav mx-auto">
           <li class="nav-item active px-lg-4">
-            <a class="nav-link text-uppercase text-expanded" href="index.html">Home
+            <a class="nav-link text-uppercase text-expanded" href="/">Home
               <span class="sr-only">(current)</span>
             </a>
           </li>
           <li class="nav-item px-lg-4">
-            <a class="nav-link text-uppercase text-expanded" href="/apiv1/anuncios">Api Anuncios</a>
+            <a class="nav-link text-uppercase text-expanded" href="/apiv1/anuncios?token=<%=JWT%>">Api Anuncios</a>
           </li>
           <li class="nav-item px-lg-4">
-            <a class="nav-link text-uppercase text-expanded" href="/apiv1/anuncios">Api Tags</a>
+            <a class="nav-link text-uppercase text-expanded" href="/apiv1/tags?token=<%=JWT%>">Api Tags</a>
           </li>
-          <li class="nav-item px-lg-4">
-            <a class="nav-link text-uppercase text-expanded" href="/anuncios">Front Anuncios</a>
-          </li>
+
           <% if (!session.authUser) { %>
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="/login">Login</a>
+                <a class="nav-link text-uppercase text-expanded" href="/login">Login</a>
             </li>
             <% } else { %>
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="/privado">Private</a>
+                <a class="nav-link text-uppercase text-expanded" href="/anuncios">Front Anuncios</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="/logout">Logout</a>
+                <a class="nav-link text-uppercase text-expanded" href="/logout">Logout</a>
             </li>
             <% } %>
             <% getLocales().forEach( locale => { %>

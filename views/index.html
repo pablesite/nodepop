@@ -1,5 +1,7 @@
 <% include header.html %>
 
+
+
 <section class="page-section clearfix">
   <div class="container">
     <div class="intro">
@@ -9,11 +11,28 @@
           <span class="section-heading-upper"><%= __('Welcome to') %>:</span>
           <span class="section-heading-lower">Tu Api de anuncios </span>
         </h2>
-          <p><%= __('Click') %> <a href="/apiv1/anuncios"><%= __('here') %></a>
-            <%= __('in order to use the app prepared for you.') %></p>
-          <p><%= __('Click') %> <a href="/apiv1/tags"><%= __('here') %></a>
-            <%= __('to use the functionality that filter available tags.') %></p>       
-       
+        <p >Tu JWT es: </p>
+
+        <% if(JWT === '') { %>
+        
+        <p>Go to /apiv1/login to obtain a new token</p>
+
+        <%}%>
+        <p style="width: 400px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;"  > <%=JWT%></p>
+      
+        <p><%= __('Click') %> <a href="/apiv1/anuncios?token=<%=JWT%>"><%= __('here') %></a>
+          <%= __('in order to use the app prepared for you.') %></p>
+        <p><%= __('Click') %> <a href="/apiv1/tags?token=<%=JWT%>"><%= __('here') %></a>
+          <%= __('to use the functionality that filter available tags.') %></p>
+
+        <form action="./apiv1/enterJWT" method="get">
+          <p>Introduce tu JWT: <input type="text" name="token"></p>
+          <input type="submit" value="Enviar">
+        </form>
+
       </div>
     </div>
   </div>
@@ -24,11 +43,12 @@
     <div class="row">
       <div class="col-xl-9 mx-auto">
         <div class="cta-inner text-center rounded">
-          <h2 class="section-heading mb-4">       
+          <h2 class="section-heading mb-4">
             <span class="section-heading-upper">Ahroa también en:</span>
             <span class="section-heading-lower">Front End</span>
           </h2>
-          <p class="mb-0"><%= __('If you want to see results in a view, click ') %> <a href="/anuncios"><%= __('here') %></a></p>
+          <p class="mb-0"><%= __('If you want to see results in a view, click ') %> <a
+              href="/anuncios"><%= __('here') %></a></p>
         </div>
       </div>
     </div>

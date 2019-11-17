@@ -13,6 +13,7 @@ const mongooseConnection = require('./lib/connectMongoose');
 require('./models/Anuncio');
 
 
+/* ------------------------------------------------------------------ */
 /* View engine setup */
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'html');
@@ -25,6 +26,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+
+/* ------------------------------------------------------------------ */
 /**
  * Setup i18n
  */
@@ -35,7 +39,13 @@ app.use(i18n.init);
 //console.log(i18n.__('EXAMPLE'));
 
 app.locals.title = 'Nodepop';
+if (app.locals.JWT === undefined){
+  app.locals.JWT = '';
+}
 
+
+
+/* ------------------------------------------------------------------ */
 /**
  * Inicializamos y cargamos la sesión del usuario que hace la petición
  */
@@ -61,31 +71,42 @@ app.use((req, res, next) => {
   next();
 });
 
+
+/* ------------------------------------------------------------------ */
 /** Rutas de mi aplicación web */
 const sessionAuth = require('./lib/sessionAuth');
 
 const loginController = require('./routes/loginController');
 const privadoController = require('./routes/privadoController');
 
+
 app.use('/',                require('./routes/index'));
-app.use('/services',        require('./routes/services'));
+//app.use('/services',        require('./routes/services'));
 app.use('/change-locale',   require('./routes/change-locale'));
-app.use('/anuncios',        require('./routes/anuncios'));
+app.use('/anuncios',  sessionAuth('admin'),  require('./routes/anuncios'));
 
 // Usamos el estilo de Controladores para estructura las rutas siguientes:
-app.get('/login', loginController.index);
-app.post('/login', loginController.post);
-app.get('/logout', loginController.logout);
-
-app.get('/privado', sessionAuth('admin'), privadoController.index);
+app.get('/login',           loginController.index);
+app.post('/login',          loginController.post);
+app.get('/logout',          loginController.logout);
 
 
+
+/* ------------------------------------------------------------------ */
 /** Rutas de mi API */
 //app.use('/apiv1/anuncios',  require('./routes/apiv1/anuncios'));
 const jwtAuth = require('./lib/jwtAuth');
-app.use('/apiv1/anuncios',  jwtAuth(), require('./routes/apiv1/anuncios')); // otra manera de proteger todo el middleware de anuncios (hay que cargarlo arriba)
-app.use('/apiv1/tags',      require('./routes/apiv1/tags'));
-app.post('/apiv1/login', loginController.loginJWT);
+const loginControllerAPI = require('./routes/apiv1/loginController');
+
+app.get('/apiv1/enterJWT', function(req, res, next){
+  app.locals.JWT = req.query.token;
+  res.redirect('/');
+});
+app.use('/apiv1/anuncios',  jwtAuth(), require('./routes/apiv1/anuncios')); // otra manera de proteger todo el middleware de anuncios
+app.use('/apiv1/tags',      jwtAuth(), require('./routes/apiv1/tags'));
+app.get('/apiv1/login',     loginControllerAPI.index);
+app.post('/apiv1/login',    loginControllerAPI.loginJWT);
+
 
 /** catch 404 and forward to error handler */
 app.use(function(req, res, next) {
