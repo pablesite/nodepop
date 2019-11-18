@@ -1,4 +1,3 @@
-
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
@@ -35,10 +34,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 const i18n = require('./lib/i18nConfigure')(); 
 app.use(i18n.init);
 
-//i18n.setLocale('es');
-//console.log(i18n.__('EXAMPLE'));
-
 app.locals.title = 'Nodepop';
+
 if (app.locals.JWT === undefined){
   app.locals.JWT = '';
 }
@@ -51,7 +48,7 @@ if (app.locals.JWT === undefined){
  */
 app.use(session({
   name: 'nodeapi-session',
-  secret: 'l]~G4zXFW%0uZ^dJ30+?A/b1?=bH)8 82kR(J}3O"8E8>;9@&nuS^Me=g>]Vk`em',
+  secret: 'l]~G4zXFW%0uZ^dJ30+?A/b1?=bH)8 82kR(J}3O"8E8>;9@&nuS^Me=g>]Vk`em', //mirar en el curso si esto va en el .env 
   resave: false,
   saveUninitialized: true,
   cookie: {
@@ -75,13 +72,10 @@ app.use((req, res, next) => {
 /* ------------------------------------------------------------------ */
 /** Rutas de mi aplicación web */
 const sessionAuth = require('./lib/sessionAuth');
-
 const loginController = require('./routes/loginController');
-const privadoController = require('./routes/privadoController');
 
 
 app.use('/',                require('./routes/index'));
-//app.use('/services',        require('./routes/services'));
 app.use('/change-locale',   require('./routes/change-locale'));
 app.use('/anuncios',  sessionAuth('admin'),  require('./routes/anuncios'));
 

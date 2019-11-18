@@ -1,16 +1,7 @@
 <% include header.html %>
 
- 
-  <!-- <body onload="paginacion(<%=numPags%>)"> -->
-  
-    <!-- <h1>API de Nodepop</h1> -->
-
-    
-    
-
-
     <input type="text" size="15" maxlength="30" name="buscar" id="textBuscar">
-    <button value="botonBuscar" onclick="buscar()"> Buscar </button>   
+    <button value="botonBuscar" onclick="buscar()"> <%= __('Search') %> </button>   
 
 
     <div class="anuncio">
@@ -23,7 +14,7 @@
                 <div class="product-item-title d-flex">
                   <div class="bg-faded p-5 d-flex ml-auto rounded">
                     <h2 class="section-heading mb-0">
-                      <span class="section-heading-upper"><%= 'Anuncio '%></span>
+                      <span class="section-heading-upper"><%= __('Advert') %></span>
                       <span class="section-heading-lower"><%= anuncio.nombre%></span>
                     </h2>
                   </div>
@@ -32,18 +23,18 @@
                 <div class="product-item-description d-flex mr-auto">     
                   <div class="bg-faded p-5 rounded">
                       <div class="descrip_anun">
-                          <span>Tipo: </span>
+                          <span><%= __('Type:') %> </span>
                       <%if (anuncio.venta === true){%>
-                        Venta
+                        <%= __('Sale') %>
                       <%}else{%>
-                        Se busca
+                        <%= __('Buy') %>
                       <%}%>
                       </div>
                       
-                      <div class="descrip_anun"><span>Precio:</span> <%=anuncio.precio%> €</div>
+                      <div class="descrip_anun"><span><%= __('Price:') %></span> <%=anuncio.precio%> €</div>
                         
                       <div class="descrip_anun">
-                          <span> Tags: </span>
+                          <span> <%= __('Tags:') %> </span>
                         <div class="tag">
                           <% anuncio.tag.forEach(function(element, index){%>
                           <li> <%=element%></li>

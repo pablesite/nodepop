@@ -3,7 +3,6 @@ const Usuario = require('../../models/Usuario');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-
 // Creamos un Controller que nos servirá para asociar rutas en app.js
 
 class LoginController {
@@ -17,7 +16,6 @@ class LoginController {
         res.render('loginAPI');
     }
 
-
     // si existe el usuario le creo un JWT, 
     async loginJWT(req, res, next) {
         try {
@@ -30,7 +28,7 @@ class LoginController {
 
             // si no lo encontramos le decimos que no
             if (!usuario || !await bcrypt.compare(password, usuario.password)) {
-                res.json({ success: false, error: res.__('Invalid credentials') });
+                res.json({ success: false, error: res.__('Invalid credentials.') });
                 return;
             }
 
@@ -41,7 +39,8 @@ class LoginController {
             });
             // respondemos
             //res.locals.JWT = token; // para mostrar en la vista.
-            res.json({ success: true, token: token, info: 'Now you can go to the index and access with this token. You can also use the token to make requests from Postman.' });
+            //let info = __('Now you can go to the index and access with this token. You can also use the token to make requests from Postman.');
+            res.json({ success: true, token: token, info: res.__('Now you can go to the index and access with this token. You can also use the token to make requests from Postman.')});
             
 
         } catch (err) {

@@ -23,19 +23,17 @@
 </head>
 
 <body>
-  
 
   <h1 class="site-heading text-center text-white d-none d-lg-block">
     <span class="site-heading-upper text-primary mb-3"><%= title %></span>
-    <span class="site-heading-lower">Tu API de anuncios</span>
+    <span class="site-heading-lower"><%= __('Your API of adverts') %></span>
     
   </h1>
 
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark py-lg-4" id="mainNav">
     <div class="container">
-      <a class="navbar-brand text-uppercase text-expanded font-weight-bold d-lg-none" href="#">Start Bootstrap</a>
-      
+           
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -47,10 +45,10 @@
             </a>
           </li>
           <li class="nav-item px-lg-4">
-            <a class="nav-link text-uppercase text-expanded" href="/apiv1/anuncios?token=<%=JWT%>">Api Anuncios</a>
+            <a class="nav-link text-uppercase text-expanded" href="/apiv1/anuncios?token=<%=JWT%>"><%= __('Adverts Api') %></a>
           </li>
           <li class="nav-item px-lg-4">
-            <a class="nav-link text-uppercase text-expanded" href="/apiv1/tags?token=<%=JWT%>">Api Tags</a>
+            <a class="nav-link text-uppercase text-expanded" href="/apiv1/tags?token=<%=JWT%>"><%= __('Tags Api') %></a>
           </li>
 
           <% if (!session.authUser) { %>
@@ -59,14 +57,15 @@
             </li>
             <% } else { %>
             <li class="nav-item">
-                <a class="nav-link text-uppercase text-expanded" href="/anuncios">Front Anuncios</a>
+                <a class="nav-link text-uppercase text-expanded" href="/anuncios"><%= __('Front Adverts') %></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link text-uppercase text-expanded" href="/logout">Logout</a>
             </li>
             <% } %>
             <% getLocales().forEach( locale => { %>
-              <a href="/change-locale/<%= locale %>"><%= locale %></a>  
+              <a href="/change-locale/<%= locale %>"><img src="/img/<%= locale %>.png" alt="" width="40" ></a>  
+              
             <% }) %>
         </ul>
       </div>

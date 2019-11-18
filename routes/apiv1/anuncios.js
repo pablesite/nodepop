@@ -5,7 +5,7 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const Anuncio = mongoose.model('Anuncio');
 
-const jwtAuth = require('../../lib/jwtAuth');
+//const jwtAuth = require('../../lib/jwtAuth');
 
 
 //router.use(jwtAuth()); //protejo todo el middleware
