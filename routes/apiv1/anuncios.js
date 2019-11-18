@@ -5,6 +5,7 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const Anuncio = mongoose.model('Anuncio');
 
+
 //const jwtAuth = require('../../lib/jwtAuth');
 
 
@@ -52,6 +53,7 @@ router.get('/', function(req, res, next){ // si lo protejo fuera, no hay que pon
 /* Crear un anuncio */
 router.post('/', function(req, res, next){
     let anuncio = new Anuncio(req.body);
+    //console.log(req.body.name)
     anuncio.save(function(err, anuncioGuardado) {
         if (err) {
             return next(err);

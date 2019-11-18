@@ -84,5 +84,5 @@ const Anuncio = mongoose.model('Anuncio', anuncioSchema);
 
 // Creación de índices en los campos en los que haremos búsquedas. 
 // Esto mejora en mucho la velocidad de consulta de la db
-anuncioSchema.index({nombre: 1, venta: 1, precio: 1, tag: 1 });
+// anuncioSchema.index({nombre: 1, venta: 1, precio: 1, tag: 1 });
 
