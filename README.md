@@ -10,7 +10,9 @@ El servicio mantiene anuncios de compra o venta de artículos y permite el filtr
 * Nodepop avanzado se actualiza incorporando la plantilla de bootstrap 'Business Casual'. Además, se ha customizado ligeramente para adaptarla a las necesidades del proyecto. En cualquier caso, el diseño no es la clave en esta aplicación.
 
 * Nodepop avanzado hace uso de un fichero .env para almacenar los password y en general información privada que no se actualiza en el repositorio.
+
 Al copiar el repositorio por primera vez se debe copiar el .env_example y actualizar los password. Para facilitar la tarea en la corrección de la práctica se indican a continuación 3 password necesarios:
+
 JWT_SECRET = '"VTLSUM9Fgamktc+&w5w$A-Tay629~kBn}y7E[^^ZC"s!h7WE`/hrX}Zt_@_k@jv';
 PASSWORD_ADMIN = '1234'
 PASSWORD_PABLO = '1234'
@@ -25,31 +27,45 @@ Se reaprovecha el script de incialización de base de datos para crear dos usuar
 ```
 
 * Nodepop avanzado cuenta con logueo JWT para la API. 
+
 Se puede conseguir un token desde la siguiente URL:
+
 https://localhost:3000/apiv1/login
+
 con el usuario:
+
 user: admin@example.com
+
 pass: 1234
 
 Lo natural es realizar peticiones desde postman o algún sw similar, introduciendo el token ya sea por queryparams o en el propio body. No obstante, se ha habilitado en la vista un formulario sencillo para introducir el token y poder acceder desde la propia vista principal a la API.
 
 * Nodepop avanzado cuenta con logueo de sesión para consumir las peticiones desde la vista. Usa el mismo usuario que en el caso anterior.
+
 Se puede hacer login/logout desde el menu principal, así como acceder a una vista de test sencilla (Front Anuncios). Esta última sólo está disponible si el logueo se ha producido.
 
 * Nodepop avanzado cuenta con subida de fotos para los anuncios.
+
 Ahora las peticiones POST de Postman deben realizarse de tipo 'form-data' y cambiar el tipo de archivo de foto. Pasa de ser un string (donde se introducía a mano la url) a ser un fichero seleccionable desde el propio Postman.
+
 ATENCIÓN: Tal cual está programado, la subida de fichero no está securizada. Es decir, al hacer la petición POST, primero se sube la foto, después se comprueba el token, y a continuación se crea el anuncio si el token es válido. Este bug queda pendiente de mejora.
 
 * Nodepop avanzado usa microservicios para la generación de thumbnail de cada foto que se sube.
+
 Se han creado un Cliente y un Servidor. 
+
 El Cliente lanza la petición de generar un thumbnail con la url de una imagen recien subida al servidor. Es decir, arranca inerentemente con la propia aplicación.
+
 El Servidor recibe la petición, genera el thumbnail de la imagen, la guarda en la misma carpeta y responde con la url de la imagen. Para arrancarlo:
+
 Ir a /lib/microservices y ejecutar:
+
 ```bash
 node thumbnailService.js
 ```
 
 Nota 1: El Cliente se lanza justo antes de guardar el anuncio en base de datos. De esta manera está asegurado que la foto ya está subida y no hay problemas.
+
 Nota 2: Cliente y Servidor están instalados en el mismo repositorio por comodidad. Lo ideal sería tener instalado el Servidor en otro repositorio, e incluso en otra máquina.  
 
 
