@@ -14,7 +14,9 @@ El servicio mantiene anuncios de compra o venta de artículos y permite el filtr
 Al copiar el repositorio por primera vez se debe copiar el .env_example y actualizar los password. Para facilitar la tarea en la corrección de la práctica se indican a continuación 3 password necesarios:
 
 JWT_SECRET = '"VTLSUM9Fgamktc+&w5w$A-Tay629~kBn}y7E[^^ZC"s!h7WE`/hrX}Zt_@_k@jv';
+
 PASSWORD_ADMIN = '1234'
+
 PASSWORD_PABLO = '1234'
 
 * Nodepop avanzado permite el cambio de idioma mediante banderas en el menu principal.
