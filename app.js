@@ -5,23 +5,22 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
-var multer  = require('multer');
+const multer  = require('multer');
+
+//var thumbnailClient = require('./lib/microservices/thumbnailClient')
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    console.log('DESTINATION' , req.body.token, '\n')
     cb(null, 'public/img/')
   },
   filename: function (req, file, cb) {
-    console.log('FILENAME_ANTES' , req.body.foto, '\n')
-    req.body.foto =  file.originalname;
-    console.log('FILENAME_DESPUES' , req.body.foto, '\n')
-    //console.log('PATH', path.join(__dirname, 'img'), '\n')
+    req.body.foto = path.join('img/', file.originalname);
     cb(null, file.originalname)
+
   }
 })
 
-var upload = multer({ storage: storage });
+const upload = multer({ storage: storage });
 
 const app = express();
 
