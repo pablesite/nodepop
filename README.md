@@ -1,17 +1,66 @@
-# Nodepop
+# Nodepop (avanzado)
 
 Nodepop es una API de demostración de un servicio de venta de artículos de segunda mano. Está especialmente diseñada para desarrolladores de iOS o Android.
 
-El servicio mantiene anuncios de compra o venta de artículos y permite buscar así como poner filtros por varios criterios.
+El servicio mantiene anuncios de compra o venta de artículos y permite el filtrado por varios criterios.
 
-## Instalando Nodepop
+## Novedades de la versión avanzada
+* Nodepop avanzado ahora usa el protocolo seguro https. 
+
+* Nodepop avanzado se actualiza incorporando la plantilla de bootstrap 'Business Casual'. Además, se ha customizado ligeramente para adaptarla a las necesidades del proyecto. En cualquier caso, el diseño no es la clave en esta aplicación.
+
+* Nodepop avanzado hace uso de un fichero .env para almacenar los password y en general información privada que no se actualiza en el repositorio.
+Al copiar el repositorio por primera vez se debe copiar el .env_example y actualizar los password. Para facilitar la tarea en la corrección de la práctica se indican a continuación 3 password necesarios:
+JWT_SECRET = '"VTLSUM9Fgamktc+&w5w$A-Tay629~kBn}y7E[^^ZC"s!h7WE`/hrX}Zt_@_k@jv';
+PASSWORD_ADMIN = '1234'
+PASSWORD_PABLO = '1234'
+
+* Nodepop avanzado permite el cambio de idioma mediante banderas en el menu principal.
+Esta funcionalidad hace efecto en las todas las vistas de la aplicación así como en las respuestas de la API. 
+
+* Nodepop avanzado incorpora usuarios que usa en logueo del tipo JWT y del tipo Sesión.
+Se reaprovecha el script de incialización de base de datos para crear dos usuarios por defecto.
+```bash
+ npm run db
+```
+
+* Nodepop avanzado cuenta con logueo JWT para la API. 
+Se puede conseguir un token desde la siguiente URL:
+https://localhost:3000/apiv1/login
+con el usuario:
+user: admin@example.com
+pass: 1234
+
+Lo natural es realizar peticiones desde postman o algún sw similar, introduciendo el token ya sea por queryparams o en el propio body. No obstante, se ha habilitado en la vista un formulario sencillo para introducir el token y poder acceder desde la propia vista principal a la API.
+
+* Nodepop avanzado cuenta con logueo de sesión para consumir las peticiones desde la vista. Usa el mismo usuario que en el caso anterior.
+Se puede hacer login/logout desde el menu principal, así como acceder a una vista de test sencilla (Front Anuncios). Esta última sólo está disponible si el logueo se ha producido.
+
+* Nodepop avanzado cuenta con subida de fotos para los anuncios.
+Ahora las peticiones POST de Postman deben realizarse de tipo 'form-data' y cambiar el tipo de archivo de foto. Pasa de ser un string (donde se introducía a mano la url) a ser un fichero seleccionable desde el propio Postman.
+ATENCIÓN: Tal cual está programado, la subida de fichero no está securizada. Es decir, al hacer la petición POST, primero se sube la foto, después se comprueba el token, y a continuación se crea el anuncio si el token es válido. Este bug queda pendiente de mejora.
+
+* Nodepop avanzado usa microservicios para la generación de thumbnail de cada foto que se sube.
+Se han creado un Cliente y un Servidor. 
+El Cliente lanza la petición de generar un thumbnail con la url de una imagen recien subida al servidor. Es decir, arranca inerentemente con la propia aplicación.
+El Servidor recibe la petición, genera el thumbnail de la imagen, la guarda en la misma carpeta y responde con la url de la imagen. Para arrancarlo:
+Ir a /lib/microservices y ejecutar:
+```bash
+node thumbnailService.js
+```
+
+Nota 1: El Cliente se lanza justo antes de guardar el anuncio en base de datos. De esta manera está asegurado que la foto ya está subida y no hay problemas.
+Nota 2: Cliente y Servidor están instalados en el mismo repositorio por comodidad. Lo ideal sería tener instalado el Servidor en otro repositorio, e incluso en otra máquina.  
+
+
+## Instalando Nodepop Avanzado
 Nodepop está subida en el repositorio público de GitLab:
-https://gitlab.keepcoding.io/pablesite/practica-backend-node.js
+https://gitlab.keepcoding.io/pablesite/practica-backend-avanzado.js
 
 Como con cualquier repositorio, se puede clonar, en el directorio en el que estemos posicionados, con:
 
 ```bash
-git clone https://gitlab.keepcoding.io/pablesite/practica-backend-node.js
+git clone https://gitlab.keepcoding.io/pablesite/practica-backend-avanzado.js
 ```
 A continuación hay que instalar los módulos necesarios:
 
@@ -81,7 +130,7 @@ Esta API ofrece la siguiente funcionalidad:
 Para filtrar anuncios, dirígete a la URL:
 
 ```bash
-http://localhost:3000/apiv1/anuncios
+https://localhost:3000/apiv1/anuncios
 ```
 Esta URL devuelve el listado de todos los anuncios que hay en base de datos. 
 Podemos filtrar:
@@ -143,7 +192,7 @@ Ordena la consulta por el campo indicado en nombre_campo.
 
 Los filtros se pueden combinar, de manera que puede quedar una consulta como la siguiente:
 ```bash
-http://localhost:3000/apiv1/anuncios?tag=mobile&venta=false&no
+https://localhost:3000/apiv1/anuncios?tag=mobile&venta=false&no
 mbre=ip&precio=50-&skip=3&limit=2&sort=precio
 ```
 
@@ -151,7 +200,7 @@ mbre=ip&precio=50-&skip=3&limit=2&sort=precio
 Para devolver la lista de tags disponible en los anuncios existentes en nuestra base de datos, dirígete a la URL:
 
 ```bash
-http://localhost:3000/apiv1/tags
+https://localhost:3000/apiv1/tags
 ```
 Esta URL devuelve el listado de las tags disponibles en los anuncios, sin repetirlas. Como máximo, se pueden listar las 4 tags disponibles.
 * work
@@ -159,29 +208,30 @@ Esta URL devuelve el listado de las tags disponibles en los anuncios, sin repeti
 * motor
 * lifestyle
 
-### Creación, edición y borrado de un anuncio
+### Creación, edición y borrado de un anuncio 
+ATENCIÓN: Revisar las novedades en el primer apartado de la documentación
 La API tiene disponible la creación, edición y borrado de un anuncio.
 Para ello habrá que usar un software de peticiones tipo Postman. El uso de este tipo de software queda fuera del alcance de esta documentación.
 Sí que cabe comentar los tipos de peticiones de cada función:
-* Creación de anuncio
-Petición POST a la URL http://localhost:3000/apiv1/
-* Creación de anuncio
-Petición PUT a la URL http://localhost:3000/apiv1/:id
-* Creación de anuncio
-Petición DELETE a la URL http://localhost:3000/apiv1/:id
+* Creación de anuncio 
+Petición POST a la URL https://localhost:3000/apiv1/
+* Actualización de un anuncio
+Petición PUT a la URL https://localhost:3000/apiv1/:id
+* Borrado de un anuncio
+Petición DELETE a la URL https://localhost:3000/apiv1/:id
 
-Si se quieren probar estas funciones, se deberá conocer el modelo a la hora de introducir el body de la petición:
+Si se quieren probar estas funciones, se deberá conocer el modelo a la hora de introducir el body de la petición (Nuevo: Ahora peticiones de tipo 'form-data'):
     - nombre: String
     - venta: Boolean
     - precio: Number
-    - foto: String 
+    - foto: String --> NUEVO: foto: File
     - tag: [String]
 ## Uso de la Página Web
 Además de la funcionalidad de la API como tal, se ha preparado una página web muy sencilla con el único objetivo de mostrar la potencia de la API. 
 La web se ha creado con el motor de vistas ejs.
 Se puede acceder con la siguiente url:
 ```bash
-http://localhost:3000/anuncios
+https://localhost:3000/anuncios
 ```
 Esta web permite visualizar los anuncios ligeramente maquetados. Además tiene un par de funcionalidades extras.
 * Buscar
