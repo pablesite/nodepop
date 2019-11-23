@@ -6,7 +6,22 @@ const logger = require('morgan');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 var multer  = require('multer');
-var upload = multer({ dest: 'uploads/' });
+
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    console.log('DESTINATION' , req.body.token, '\n')
+    cb(null, 'public/img/')
+  },
+  filename: function (req, file, cb) {
+    console.log('FILENAME_ANTES' , req.body.foto, '\n')
+    req.body.foto =  file.originalname;
+    console.log('FILENAME_DESPUES' , req.body.foto, '\n')
+    //console.log('PATH', path.join(__dirname, 'img'), '\n')
+    cb(null, file.originalname)
+  }
+})
+
+var upload = multer({ storage: storage });
 
 const app = express();
 
@@ -22,8 +37,14 @@ app.engine('html', require('ejs').__express);
 
 //Middlewares
 app.use(logger('dev'));
+
+// for parsing application/json
 app.use(express.json());
+
+// for parsing application/xwww-form-urlencoded
 app.use(express.urlencoded({ extended: false }));
+
+
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -100,16 +121,8 @@ app.get('/apiv1/enterJWT', function(req, res, next){
 });
 
 
-// app.post('/apiv1/upload', upload.single('avatar'), function (req, res, next) {
-//   console.log('test')
-//   // req.file is the `avatar` file
-//   // req.body will hold the text fields, if there were any
-//   console.log(req.file)
-//   next();
-// })
-
 //ATENCIÓN: Para pruebas quito el jwtAuth de apiv1/anuncios
-app.use('/apiv1/anuncios',  upload.single('avatar'),  require('./routes/apiv1/anuncios')); // otra manera de proteger todo el middleware de anuncios
+app.use('/apiv1/anuncios', upload.single('foto'), jwtAuth(), require('./routes/apiv1/anuncios')); // otra manera de proteger todo el middleware de anuncios
 app.use('/apiv1/tags',      jwtAuth(), require('./routes/apiv1/tags'));
 app.get('/apiv1/login',     loginControllerAPI.index);
 app.post('/apiv1/login',    loginControllerAPI.loginJWT);
