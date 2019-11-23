@@ -1,10 +1,8 @@
 'use strict';
 const Usuario = require('../models/Usuario');
 const bcrypt = require('bcrypt');
-//const jwt = require('jsonwebtoken');
 
 // Creamos un Controller que nos servirá para asociar rutas en app.js
-
 class LoginController {
 
     /**
@@ -58,7 +56,6 @@ class LoginController {
      * GET /logout
      */
     logout(req, res, next) {
-        //delete req.session.authUser; //esto podría valer pero es un poco cutre
         req.session.regenerate(err => {
             if (err) {
                 next(err);

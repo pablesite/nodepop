@@ -6,24 +6,7 @@ const logger = require('morgan');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 const multer  = require('multer');
-
-//var thumbnailClient = require('./lib/microservices/thumbnailClient')
-
-var storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'public/img/')
-  },
-  filename: function (req, file, cb) {
-    req.body.foto = file.originalname;
-    cb(null, file.originalname)
-
-  }
-})
-
-const upload = multer({ storage: storage });
-
 const app = express();
-
 const mongooseConnection = require('./lib/connectMongoose');
 require('./models/Anuncio');
 
@@ -43,10 +26,8 @@ app.use(express.json());
 // for parsing application/xwww-form-urlencoded
 app.use(express.urlencoded({ extended: false }));
 
-
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
 
 
 /* ------------------------------------------------------------------ */
@@ -61,7 +42,6 @@ app.locals.title = 'Nodepop';
 if (app.locals.JWT === undefined){
   app.locals.JWT = '';
 }
-
 
 
 /* ------------------------------------------------------------------ */
@@ -96,12 +76,11 @@ app.use((req, res, next) => {
 const sessionAuth = require('./lib/sessionAuth');
 const loginController = require('./routes/loginController');
 
-
 app.use('/',                require('./routes/index'));
 app.use('/change-locale',   require('./routes/change-locale'));
 app.use('/anuncios',  sessionAuth('admin'),  require('./routes/anuncios'));
 
-// Usamos el estilo de Controladores para estructura las rutas siguientes:
+// Usamos el estilo de Controladores para estructurar las rutas siguientes:
 app.get('/login',           loginController.index);
 app.post('/login',          loginController.post);
 app.get('/logout',          loginController.logout);
@@ -110,27 +89,39 @@ app.get('/logout',          loginController.logout);
 
 /* ------------------------------------------------------------------ */
 /** Rutas de mi API */
-//app.use('/apiv1/anuncios',  require('./routes/apiv1/anuncios'));
+
 const jwtAuth = require('./lib/jwtAuth');
 const loginControllerAPI = require('./routes/apiv1/loginController');
+
+// Configuración de Multer, para subir ficheros.
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'public/img/')
+  },
+  filename: function (req, file, cb) {
+    req.body.foto = file.originalname;
+    cb(null, file.originalname)
+
+  }
+})
+
+const upload = multer({ storage: storage });
 
 app.get('/apiv1/enterJWT', function(req, res, next){
   app.locals.JWT = req.query.token;
   res.redirect('/');
 });
-
-
-//ATENCIÓN: Para pruebas quito el jwtAuth de apiv1/anuncios
-app.use('/apiv1/anuncios', upload.single('foto'), jwtAuth(), require('./routes/apiv1/anuncios')); // otra manera de proteger todo el middleware de anuncios
-app.use('/apiv1/tags',      jwtAuth(), require('./routes/apiv1/tags'));
-app.get('/apiv1/login',     loginControllerAPI.index);
-app.post('/apiv1/login',    loginControllerAPI.loginJWT);
+app.use('/apiv1/anuncios', upload.single('foto'), jwtAuth(), require('./routes/apiv1/anuncios'));
+app.use('/apiv1/tags', jwtAuth(), require('./routes/apiv1/tags'));
+app.get('/apiv1/login', loginControllerAPI.index);
+app.post('/apiv1/login', loginControllerAPI.loginJWT);
 
 
 /** catch 404 and forward to error handler */
 app.use(function(req, res, next) {
   next(createError(404));
 });
+
 
 /** error handler */
 app.use(function(err, req, res, next) {
@@ -141,10 +132,12 @@ app.use(function(err, req, res, next) {
     err.message = `Not valid - ${errInfo.param} ${errInfo.msg}`; 
   }
 
+
   /** set locals, only providing error in development */
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
+  
   /** render the error page */
   res.status(err.status || 500);
   if (isAPI(req)){

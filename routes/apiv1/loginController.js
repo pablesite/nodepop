@@ -4,7 +4,6 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 // Creamos un Controller que nos servirá para asociar rutas en app.js
-
 class LoginController {
 
     /**
@@ -38,8 +37,6 @@ class LoginController {
                 expiresIn: '2d'
             });
             // respondemos
-            //res.locals.JWT = token; // para mostrar en la vista.
-            //let info = __('Now you can go to the index and access with this token. You can also use the token to make requests from Postman.');
             res.json({ success: true, token: token, info: res.__('Now you can go to the index and access with this token. You can also use the token to make requests from Postman.')});
             
 
