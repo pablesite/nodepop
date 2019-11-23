@@ -14,7 +14,7 @@ var storage = multer.diskStorage({
     cb(null, 'public/img/')
   },
   filename: function (req, file, cb) {
-    req.body.foto = path.join('img/', file.originalname);
+    req.body.foto = file.originalname;
     cb(null, file.originalname)
 
   }

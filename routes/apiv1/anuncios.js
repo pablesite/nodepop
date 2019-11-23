@@ -5,6 +5,7 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const Anuncio = mongoose.model('Anuncio');
 const thumbnailClient = require('../../lib/microservices/thumbnailClient')
+const path = require('path');
 
 /* Recupero los parámetros que me entran en la ruta */
 router.get('/', function(req, res, next){ // si lo protejo fuera, no hay que ponerlo otra vez aquí (jwtAuth)
@@ -47,10 +48,11 @@ router.get('/', function(req, res, next){ // si lo protejo fuera, no hay que pon
 
 /* Crear un anuncio */
 router.post('/', function(req, res, next){
+   
     let anuncio = new Anuncio(req.body);
-
+    
     // lanzo el cliente para generar el thumbnail
-    thumbnailClient.cliente(req.body.foto);
+    thumbnailClient.cliente(path.join('img/', req.body.foto));
 
     anuncio.save(function(err, anuncioGuardado) {
         if (err) {
