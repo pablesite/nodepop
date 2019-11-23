@@ -3,7 +3,7 @@
 const mongoose = require('mongoose');
 
 const anuncioSchema = mongoose.Schema({
-    nombre: String,
+    nombre: {type: String, unique: true},
     venta: Boolean,
     precio: Number,
     foto: String, 
