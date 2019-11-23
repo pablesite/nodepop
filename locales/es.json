@@ -10,7 +10,6 @@
 	"Now you can go to the index and access with this token. You can also use the token to make requests from Postman.": "Ahora puedes ir al index y acceder con este token. También puedes usar el token para hacer peticiones desde Postman.",
 	"No token provided. Please go to /apiv1/login in order to obtain a new token": "No se ha proporcionado un token. Por favor, ve a /apiv1/login para obtener un nuevo token.",
 	"Invalid signature. Please go to /apiv1/login in order to obtain a new token": "Acceso incorrecto. Por favor, ve a /apiv1/login para obtener un nuevo token.",
-	"Get a new token.": "Obten un nuevo token.",
 	"Email address": "Dirección de correo",
 	"Password": "Contraseña",
 	"Submit": "Enviar",
@@ -33,5 +32,6 @@
 	"Advert": "Anuncio",
 	"Email address.": "Email address.",
 	"Password.": "Password.",
-	"Submit.": "Submit."
+	"Submit.": "Submit.",
+	"Get a new token for API access.": "Consigue un nuevo token para acceder a la API."
 }

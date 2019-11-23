@@ -7,7 +7,7 @@
     "dev": "cross-env DEBUG=nodeapi:* nodemon",
     "prod": "cross-env NODE_ENV=production npm start",
     "cluster": "cross-env NODE_ENV=production node ./bin/cluster",
-    "db": "node models/install_db.js",
+    "db": "node lib/install_db.js",
     "testapp": "node_modules/.bin/eslint ./app.js",
     "testroutes": "node_modules/.bin/eslint ./routes/**",
     "testmodels": "node_modules/.bin/eslint ./models/**",

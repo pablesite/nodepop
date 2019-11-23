@@ -11,7 +11,6 @@
 	"Now you can go to the index and access with this token. You can also use the token to make requests from Postman.": "Now you can go to the index and access with this token. You can also use the token to make requests from Postman.",
 	"No token provided. Please go to /apiv1/login in order to obtain a new token": "No token provided. Please go to /apiv1/login in order to obtain a new token.",
 	"Invalid signature. Please go to /apiv1/login in order to obtain a new token": "Invalid signature. Please go to /apiv1/login in order to obtain a new token.",
-	"Get a new token.": "Get a new token.",
 	"Email address": "Email address",
 	"Password": "Password",
 	"Submit": "Submit",
@@ -34,5 +33,6 @@
 	"Advert": "Advert",
 	"Email address.": "Email address.",
 	"Password.": "Password.",
-	"Submit.": "Submit."
+	"Submit.": "Submit.",
+	"Get a new token for API access.": "Get a new token for API access."
 }
